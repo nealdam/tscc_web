@@ -3,7 +3,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
     Redirect,
     useHistory,
     useLocation
@@ -11,6 +10,7 @@ import {
 import LoginPage from "./pages/login/LoginPage";
 import OperatorPage from "./pages/operator/OperatorPage";
 import ManagerPage from "./pages/manager/ManagerPage";
+import NoMatchPage from "./pages/noMatch/NoMatchPage";
 
 export default function App() {
     return (
@@ -23,8 +23,11 @@ export default function App() {
                     <Route path="/manager">
                         <ManagerPage />
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                         <LoginPage />
+                    </Route>
+                    <Route path="*">
+                        <NoMatchPage />
                     </Route>
                 </Switch>
                 
