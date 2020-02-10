@@ -1,5 +1,6 @@
 import React from 'react'
 import { AppBar, Tab, Tabs, Typography, Box } from '@material-ui/core';
+import RequestTable from './RequestTable';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -42,7 +43,7 @@ export default function RequestPanel() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                Waiting request
+                <RequestTable />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Confirmed request
