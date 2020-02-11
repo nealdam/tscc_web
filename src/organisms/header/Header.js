@@ -5,7 +5,8 @@ import {
   IconButton,
   Badge,
   Typography,
-  makeStyles
+  makeStyles,
+  Button
 } from "@material-ui/core";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -31,9 +32,15 @@ export default function Header() {
               <NotificationIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
+          <Typography variant="subtitle1">
+            Operator 123
+          </Typography>
+          <Button
+            variant="outlined"
+            color="inherit"
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
