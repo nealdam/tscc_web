@@ -39,7 +39,7 @@ export default function App() {
 }
 
 const currentUser = {
-  isAuthenticated: false
+  isAuthenticated: true
 };
 
 function PrivateRoute({ children, ...rest }) {
