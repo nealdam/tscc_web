@@ -9,7 +9,6 @@ import {
   Button
 } from "@material-ui/core";
 import NotificationIcon from "@material-ui/icons/Notifications";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles(theme => ({
   title: {
