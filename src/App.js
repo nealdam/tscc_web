@@ -11,6 +11,7 @@ import LoginPage from "./pages/login/LoginPage";
 import OperatorPage from "./pages/operator/OperatorPage";
 import ManagerPage from "./pages/manager/ManagerPage";
 import NoMatchPage from "./pages/noMatch/NoMatchPage";
+import AccountManagerPage from "./pages/account_manager/AccountManagerPage";
 
 export default function App() {
   return (
@@ -28,6 +29,9 @@ export default function App() {
           </PrivateRoute>
           <PrivateRoute path="/manager">
             <ManagerPage />
+          </PrivateRoute>
+          <PrivateRoute path="/account-manager">
+            <AccountManagerPage />
           </PrivateRoute>
           <Route path="*">
             <NoMatchPage />
