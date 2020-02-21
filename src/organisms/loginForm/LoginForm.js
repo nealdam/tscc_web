@@ -14,18 +14,15 @@ export default function LoginForm() {
   const handleLogin = (e) => {
     e.preventDefault();
 
+    //TODO: validate
     firebase
       .auth()
       .signInWithEmailAndPassword(username, password)
       .then(response => {
         enqueueSnackbar("Login success", successNotify);
-        console.log(response);
       })
       .catch(error => {
         enqueueSnackbar("Incorrect email or password", errorNotify);
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode + errorMessage);
       });
   }
 
