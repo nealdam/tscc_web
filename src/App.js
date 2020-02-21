@@ -11,23 +11,19 @@ import LoginPage from "./pages/login/LoginPage";
 import OperatorPage from "./pages/operator/OperatorPage";
 import ManagerPage from "./pages/manager/ManagerPage";
 import NoMatchPage from "./pages/noMatch/NoMatchPage";
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
+import { messaging } from './init-fcm';
 
 export default function App() {
-  
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyCPEyplo1MwwQwtomYxzaq_yQxymYD5AwU",
-      authDomain: "tscc-notification.firebaseapp.com",
-      databaseURL: "https://tscc-notification.firebaseio.com",
-      projectId: "tscc-notification",
-      storageBucket: "tscc-notification.appspot.com",
-      messagingSenderId: "951076084886",
-      appId: "1:951076084886:web:e5244ed835616b4859f6b7"
-    };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+  messaging.requestPermission()
+    .then(async function() {
+			const token = await messaging.getToken();
+    })
+    .catch(function(err) {
+      console.log("Unable to get permission to notify.", err);
+    });
+  navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
 
   return (
     <Router>
