@@ -18,7 +18,11 @@ if ("serviceWorker" in navigator) {
 }
 
 ReactDOM.render(
-  <SnackbarProvider>
+  <SnackbarProvider
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right'
+    }}>
     <App />
   </SnackbarProvider>,
   document.getElementById("root")
