@@ -14,6 +14,7 @@ import NoMatchPage from "./pages/noMatch/NoMatchPage";
 import { messaging } from './init-fcm';
 import { useSnackbar } from "notistack";
 import { infoNotify } from './constants/notistackOption';
+import { handleComingNotification } from "./service/NotificationService";
 
 export default function App() {
 
@@ -27,7 +28,7 @@ export default function App() {
       console.log("Unable to get permission to notify.", err);
     });
   navigator.serviceWorker.addEventListener("message", (message) => {
-    enqueueSnackbar(message.data['firebase-messaging-msg-data'].notification.title, infoNotify);
+    handleComingNotification(message, enqueueSnackbar);
   });
 
   return (
