@@ -20,6 +20,12 @@ export default function LoginForm() {
       .signInWithEmailAndPassword(username, password)
       .then(response => {
         enqueueSnackbar("Login success", successNotify);
+
+        firebase.auth().currentUser.getIdToken(true).then((idToken) => {
+          console.log("User Id Token: " +idToken);
+        }).catch((error) => {
+          console.log("error: " + error);
+        });
       })
       .catch(error => {
         enqueueSnackbar("Incorrect email or password", errorNotify);

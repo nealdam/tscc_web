@@ -2,7 +2,7 @@ import * as firebase from "firebase/app";
 import "firebase/messaging";
 const initializedFirebaseApp = firebase.initializeApp({
 	// Project Settings => Add Firebase to your web app
-    apiKey: "AIzaSyDH_z2YwgYAlEhMheZVAnZ0e9KKAHZCyX0",
+  apiKey: "AIzaSyApbaXkLAS3qHvIGsazl5hakTqTpF7HRyg",
   authDomain: "tscc-2020.firebaseapp.com",
   databaseURL: "https://tscc-2020.firebaseio.com",
   projectId: "tscc-2020",
