@@ -11,7 +11,7 @@ import LoginPage from "./pages/login/LoginPage";
 import OperatorPage from "./pages/operator/OperatorPage";
 import ManagerPage from "./pages/manager/ManagerPage";
 import NoMatchPage from "./pages/noMatch/NoMatchPage";
-import { messaging } from './init-fcm';
+import { messaging } from './Firebase';
 import { useSnackbar } from "notistack";
 import { infoNotify } from './constants/notistackOption';
 
@@ -20,10 +20,10 @@ export default function App() {
   const { enqueueSnackbar } = useSnackbar();
 
   messaging.requestPermission()
-    .then(async function() {
-			const token = await messaging.getToken();
+    .then(async () => {
+      const token = await messaging.getToken();
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log("Unable to get permission to notify.", err);
     });
   navigator.serviceWorker.addEventListener("message", (message) => {
@@ -69,13 +69,13 @@ function PrivateRoute({ children, ...rest }) {
         currentUser.isAuthenticated ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+          )
       }
     />
   );
