@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/messaging";
 
+//TODO: read from outside
 const firebaseConfig = {
   apiKey: "AIzaSyD8sbs3FnsB7KzTjrrNNIhKOcJZDId5vOc",
   authDomain: "tscc-sp20.firebaseapp.com",
