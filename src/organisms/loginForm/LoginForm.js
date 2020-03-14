@@ -3,6 +3,7 @@ import { TextField, FormControlLabel, Checkbox, Button } from "@material-ui/core
 import firebase from 'firebase';
 import { useSnackbar } from "notistack";
 import { successNotify, errorNotify } from "../../constants/notistackOption";
+import { firebaseAuth } from "../../utils/firebaseUtils";
 
 export default function LoginForm() {
 
@@ -15,9 +16,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     //TODO: validate
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(username, password)
+    firebaseAuth(username, password)
       .then(response => {
         enqueueSnackbar("Login success", successNotify);
       })
