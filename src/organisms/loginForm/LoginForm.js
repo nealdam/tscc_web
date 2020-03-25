@@ -20,6 +20,8 @@ export default function LoginForm() {
     //TODO: validate
     signinWithEmailAndPassword(username, password)
       .then(response => {
+        console.log(response);
+        localStorage.setItem("refreshToken", response.user.refreshToken);
         enqueueSnackbar("Login successful", successNotify);
         history.push("/operator");
       })

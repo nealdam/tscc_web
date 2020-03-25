@@ -14,6 +14,7 @@ import NoMatchPage from "./pages/noMatch/NoMatchPage";
 import { messaging } from './private/Firebase';
 import { useSnackbar } from "notistack";
 import { infoNotify } from './constants/notistackOption';
+import firebase from 'firebase';
 
 export default function App() {
 
@@ -56,21 +57,25 @@ export default function App() {
   );
 }
 
-const currentUser = {
-  isAuthenticated: true,
-  role: null
-};
+// let currentUser = {
+//   isAuthenticated: true,
+//   role: null
+// };
 
 function PrivateRoute({ children, ...rest }) {
   //   const currentUser = authenticationService.currentUserValue;
 
   console.log("Go to private route");
 
+
+
+  let firebaseUser = firebase.auth().currentUser;
+
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        currentUser.isAuthenticated ? (
+        firebaseUser ? (
           children
         ) : (
             <Redirect
