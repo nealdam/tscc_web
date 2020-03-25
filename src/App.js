@@ -11,7 +11,7 @@ import LoginPage from "./pages/login/LoginPage";
 import OperatorPage from "./pages/operator/OperatorPage";
 import ManagerPage from "./pages/manager/ManagerPage";
 import NoMatchPage from "./pages/noMatch/NoMatchPage";
-import { messaging } from './Firebase';
+import { messaging } from './private/Firebase';
 import { useSnackbar } from "notistack";
 import { infoNotify } from './constants/notistackOption';
 
