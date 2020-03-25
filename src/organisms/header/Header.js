@@ -8,6 +8,7 @@ import {
   makeStyles,
   Button
 } from "@material-ui/core";
+import firebase from 'firebase';
 import NotificationIcon from "@material-ui/icons/Notifications";
 
 const useStyles = makeStyles(theme => ({
@@ -18,6 +19,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
+
+  const currentUser = firebase.auth().currentUser;
+
+  console.log("Current user: " + currentUser.email);
 
   return (
     <div>

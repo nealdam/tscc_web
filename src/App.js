@@ -26,6 +26,7 @@ export default function App() {
     .catch(function (err) {
       console.log("Unable to get permission to notify.", err);
     });
+
   navigator.serviceWorker.addEventListener("message", (message) => {
     enqueueSnackbar(message.data['firebase-messaging-msg-data'].notification.title, infoNotify);
   });
@@ -56,11 +57,14 @@ export default function App() {
 }
 
 const currentUser = {
-  isAuthenticated: true
+  isAuthenticated: true,
+  role: null
 };
 
 function PrivateRoute({ children, ...rest }) {
   //   const currentUser = authenticationService.currentUserValue;
+
+  console.log("Go to private route");
 
   return (
     <Route

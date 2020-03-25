@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { TextField, FormControlLabel, Checkbox, Button } from "@material-ui/core";
-import firebase from 'firebase';
+import { Button, Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import { useSnackbar } from "notistack";
-import { successNotify, errorNotify } from "../../constants/notistackOption";
-import { firebaseAuth } from "../../utils/firebaseUtils";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { errorNotify, successNotify } from "../../constants/notistackOption";
+import { signinWithEmailAndPassword } from "../../services/authService";
 
 export default function LoginForm() {
 
@@ -12,16 +12,21 @@ export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  let history = useHistory();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
     //TODO: validate
-    firebaseAuth(username, password)
+    signinWithEmailAndPassword(username, password)
       .then(response => {
-        enqueueSnackbar("Login success", successNotify);
+        enqueueSnackbar("Login successful", successNotify);
+        history.push("/operator");
       })
       .catch(error => {
         enqueueSnackbar("Incorrect email or password", errorNotify);
+        console.log("Error code: " + error.code);
+        console.log("Error message: " + error.message);
       });
   }
 
