@@ -1,7 +1,6 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { errorNotify, successNotify } from "../../constants/notistackOption";
 import { signinWithEmailAndPassword } from "../../services/authService";
 
@@ -12,18 +11,13 @@ export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  let history = useHistory();
-
   const handleLogin = (e) => {
     e.preventDefault();
 
     //TODO: validate
     signinWithEmailAndPassword(username, password)
       .then(response => {
-        console.log(response);
-        localStorage.setItem("refreshToken", response.user.refreshToken);
         enqueueSnackbar("Login successful", successNotify);
-        history.push("/operator");
       })
       .catch(error => {
         enqueueSnackbar("Incorrect email or password", errorNotify);

@@ -1,15 +1,7 @@
-import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Badge,
-  Typography,
-  makeStyles,
-  Button
-} from "@material-ui/core";
-import firebase from 'firebase';
+import { AppBar, Badge, Button, IconButton, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import NotificationIcon from "@material-ui/icons/Notifications";
+import React from "react";
+import { auth } from "../../firebase/firebase";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -19,10 +11,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
-
-  const currentUser = firebase.auth().currentUser;
-
-  console.log("Current user: " + currentUser.email);
 
   return (
     <div>
@@ -42,6 +30,7 @@ export default function Header() {
           <Button
             variant="outlined"
             color="inherit"
+            onClick={() => auth.signOut()}
           >
             Logout
           </Button>
