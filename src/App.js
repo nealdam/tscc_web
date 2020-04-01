@@ -9,9 +9,18 @@ import LoginPage from "./pages/login/LoginPage";
 import ManagerPage from "./pages/manager/ManagerPage";
 import NoMatchPage from "./pages/noMatch/NoMatchPage";
 import OperatorPage from "./pages/operator/OperatorPage";
+import { makeStyles, CssBaseline } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  }
+}))
 
 
 export default function App() {
+
+  const classes = useStyles();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -28,9 +37,10 @@ export default function App() {
   });
 
   return (
-    <PageProvider>
-      <Router>
-        <div>
+    <div className={classes.root}>
+      <CssBaseline />
+      <PageProvider>
+        <Router>
           <Switch>
             <Route exact path="/">
               <HomePage />
@@ -48,9 +58,9 @@ export default function App() {
               <NoMatchPage />
             </Route>
           </Switch>
-        </div>
-      </Router>
-    </PageProvider>
+        </Router>
+      </PageProvider>
+    </div>
   );
 }
 
