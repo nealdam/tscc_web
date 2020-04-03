@@ -3,6 +3,7 @@ import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
+import TrashCollect from './trashCollect/TrashCollect'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -31,7 +32,7 @@ export default function OperatorPage() {
                         <div>Operator home page</div>
                     </Route>
                     <Route path={`${path}/collect`} >
-                        <div>Operator collect page</div>
+                        <TrashCollect />
                     </Route>
                     <Route exact path={`${path}/driver`} >
                         <div>Operator driver page</div>
