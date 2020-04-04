@@ -5,8 +5,8 @@ import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLin
 import StreetRouteTable from '../../organisms/streetRouteTable/StreetRouteTable';
 import PropTypes from 'prop-types';
 
-function createStreetRoute(street, district, city, numberOfRequest) {
-    return { street, district, city, numberOfRequest };
+function createStreetRoute(street, district, city, numReq) {
+    return { street, district, city, numReq };
 }
 
 function TrashCollect() {

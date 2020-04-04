@@ -147,7 +147,7 @@ function StreetRouteTable(props) {
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.district}</TableCell>
                                         <TableCell align="left" padding="none">{row.city}</TableCell>
-                                        <TableCell align="right">{row.numberOfRequest}</TableCell>
+                                        <TableCell align="right">{row.numReq}</TableCell>
                                         <TableCell align="left">Button</TableCell>
                                     </TableRow>
                                 );
