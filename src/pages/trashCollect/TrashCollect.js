@@ -1,10 +1,12 @@
-import { TableContainer, Table, makeStyles, TableBody, TableRow, Checkbox, TableCell, TablePagination } from '@material-ui/core';
+import { TableContainer, Table, makeStyles, TableBody, TableRow, Checkbox, TableCell, TablePagination, ButtonGroup, Button } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../../context/PageProvider';
-import { getStreetRoute } from '../../../services/operatorService';
-import EnhancedTableHead from '../../../organisms/enhancedTableHead/EnhancedTableHead';
+import { UserContext } from '../../context/PageProvider';
+import { getStreetRoute } from '../../services/operatorService';
+import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
 import PropTypes from 'prop-types';
-import { streetRouteHeadCells } from '../../../constants/headCells';
+import { streetRouteHeadCells } from '../../constants/headCells';
+import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
+import { collectTrashSteps } from '../../constants/steps';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -49,16 +51,6 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-EnhancedTableHead.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
-
 function createStreetRoute(street, district, city, numberOfRequest) {
     return { street, district, city, numberOfRequest };
 }
@@ -66,7 +58,6 @@ function createStreetRoute(street, district, city, numberOfRequest) {
 export default function TrashCollect() {
 
     const [streetRoutes, setStreetRoutes] = useState([createStreetRoute('Thành Công', 'Tân Phú', 'Hồ Chí Minh', 3)]);
-    const userData = useContext(UserContext);
 
     // useEffect(() => {
     //     console.log("Fetch street route");
@@ -81,6 +72,17 @@ export default function TrashCollect() {
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const [activeStep, setActiveStep] = useState(0);
+    const steps = collectTrashSteps;
+
+    const handleNextStep = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+
+    const handleBackStep = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -102,7 +104,7 @@ export default function TrashCollect() {
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = new selected.concat(selected, name);
+            newSelected = newSelected.concat(selected, name);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -121,12 +123,20 @@ export default function TrashCollect() {
         setPage(newPage);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (street) => selected.indexOf(street) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, streetRoutes.length - page * rowsPerPage);
 
     return (
         <div>
+            <HorizontalLinearStepper
+                steps={steps}
+                activeStep={activeStep}
+            />
+            <ButtonGroup color="primary" aria-label="outlined primary button group">
+                <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
+                <Button disabled={activeStep === (steps.length - 1)} onClick={handleNextStep}>Next</Button>
+            </ButtonGroup>
             <TableContainer>
                 <Table
                     className={classes.table}

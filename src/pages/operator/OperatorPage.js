@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
-import TrashCollect from './trashCollect/TrashCollect'
+import TrashCollect from '../trashCollect/TrashCollect'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,

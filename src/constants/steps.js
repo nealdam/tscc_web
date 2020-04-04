@@ -1,0 +1,1 @@
+export const collectTrashSteps = ['Select Trash Areas', 'Select Driver', 'Confirm'];
