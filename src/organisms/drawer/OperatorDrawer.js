@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import { DRAWER_WIDTH } from '../../constants/dimension';
 import HomeIcon from '@material-ui/icons/Home';
@@ -22,6 +22,12 @@ const useStyle = makeStyles((theme) => ({
 
 export default function OperatorDrawer() {
     const classes = useStyle();
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+    }
+
 
     return (
         <Drawer
@@ -34,20 +40,20 @@ export default function OperatorDrawer() {
         >
             <div className={classes.toolbar} />
             <Divider />
-            <List>
-                <ListItem button component={RouterLink} to="/operator">
+            <List component="nav">
+                <ListItem button selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)} component={RouterLink} to="/operator">
                     <ListItemIcon><HomeIcon /></ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/operator/collect">
+                <ListItem button selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} component={RouterLink} to="/operator/collect">
                     <ListItemIcon><LocationOnIcon /></ListItemIcon>
                     <ListItemText primary="Collect Trash" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/operator/driver">
+                <ListItem button selected={selectedIndex === 2} onClick={(event) => handleListItemClick(event, 2)} component={RouterLink} to="/operator/driver">
                     <ListItemIcon><TrashCarIcon /></ListItemIcon>
                     <ListItemText primary="Driver" />
                 </ListItem>
-                <ListItem button component={RouterLink} to="/operator/notification">
+                <ListItem button selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)} component={RouterLink} to="/operator/notification">
                     <ListItemIcon><NotificationIcon /></ListItemIcon>
                     <ListItemText primary="Notification" />
                 </ListItem>

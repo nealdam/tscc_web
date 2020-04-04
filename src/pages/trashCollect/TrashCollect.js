@@ -12,7 +12,10 @@ function createStreetRoute(street, district, city, numberOfRequest) {
 
 export default function TrashCollect() {
 
-    const [streetRoutes, setStreetRoutes] = useState([createStreetRoute('Thành Công', 'Tân Phú', 'Hồ Chí Minh', 3)]);
+    const [streetRoutes, setStreetRoutes] = useState([
+        createStreetRoute('Thành Công', 'Tân Phú', 'Hồ Chí Minh', 3),
+        createStreetRoute('Trương Vĩnh Ký', 'Tân Phú', 'Hồ Chí Minh', 10)
+    ]);
 
     // useEffect(() => {
     //     console.log("Fetch street route");

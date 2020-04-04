@@ -64,7 +64,7 @@ function StreetRouteTable(props) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = streetRoutes.map((n) => n.name);
+            const newSelecteds = streetRoutes.map((n) => n.street);
             setSelected(newSelecteds);
             return;
         }
