@@ -153,7 +153,7 @@ function StreetRouteTable(props) {
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.district}</TableCell>
                                         <TableCell align="left" padding="none">{row.city}</TableCell>
-                                        <TableCell align="right">{row.listTrashAreas.length}</TableCell>
+                                        <TableCell align="right">{row.numberOfTrashArea}</TableCell>
                                         <TableCell align="left">
                                             <Button
                                                 variant="contained"
