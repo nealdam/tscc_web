@@ -129,11 +129,11 @@ function TrashAreaTable(props) {
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.street)}
+                                        onClick={(event) => handleClick(event, row.id)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.street}
+                                        key={row.id}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -143,11 +143,11 @@ function TrashAreaTable(props) {
                                             />
                                         </TableCell>
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.numReq}
+                                            {row.numberOfRequest}
                                         </TableCell>
-                                        <TableCell align="left" padding="none">{row.size}</TableCell>
-                                        <TableCell align="left" padding="none">{row.weight}</TableCell>
-                                        <TableCell align="right">{row.type}</TableCell>
+                                        <TableCell align="left" padding="none">{row.size.name}</TableCell>
+                                        <TableCell align="left" padding="none">{row.width.name}</TableCell>
+                                        <TableCell align="right">{row.type.name}</TableCell>
                                         <TableCell align="left">Button</TableCell>
                                     </TableRow>
                                 );

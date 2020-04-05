@@ -7,9 +7,9 @@ export const streetRouteHeadCells = [
 ];
 
 export const trashAreaHeadCells = [
-    { id: 'numReq', numeric: false, disablePadding: true, label: 'Number of Request' },
-    { id: 'size', numeric: false, disablePadding: true, label: 'Size(m)' },
-    { id: 'weight', numeric: false, disablePadding: true, label: 'Weight(kg)' },
+    { id: 'numberOfRequest', numeric: false, disablePadding: true, label: 'Request number' },
+    { id: 'size', numeric: false, disablePadding: true, label: 'Size(kg)' },
+    { id: 'width', numeric: false, disablePadding: true, label: 'Width(m)' },
     { id: 'type', numeric: false, disablePadding: true, label: 'Type' }
 ]
 

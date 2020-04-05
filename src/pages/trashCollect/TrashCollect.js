@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Typography, Box } from '@material-ui/core';
+import { Button, ButtonGroup, Typography, Box, LinearProgress } from '@material-ui/core';
 import React, { useState, useEffect, useContext } from 'react';
 import { collectTrashSteps } from '../../constants/steps';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
@@ -6,30 +6,39 @@ import StreetRouteTable from '../../organisms/streetRouteTable/StreetRouteTable'
 import PropTypes from 'prop-types';
 import { getStreetRoute } from '../../services/operatorService';
 import { UserContext } from '../../context/PageProvider';
-
-function createStreetRoute(street, district, city, numReq) {
-    return { street, district, city, numReq };
-}
+import { useSnackbar } from 'notistack';
+import { successNotify, errorNotify } from '../../constants/notistackOption';
 
 function TrashCollect() {
+    const { enqueueSnackbar } = useSnackbar();
+    const [isLoading, setIsLoading] = useState(false);
 
     const userData = useContext(UserContext)
     const [streetRoutes, setStreetRoutes] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const steps = collectTrashSteps;
 
+
     useEffect(() => {
         console.log("Fetch street route");
+        setIsLoading(true);
         // setStreetRoutes(getStreetRoute(userData.userToken));
         getStreetRoute(userData.userToken)
             .then(response => {
-                console.log("success");
-                console.log(response.data.content);
-                setStreetRoutes(response.data.content);
+                setIsLoading(false);
+
+                if (response.data.success) {
+                    enqueueSnackbar("Fetch street route data success", successNotify);
+                    setStreetRoutes(response.data.content);
+                } else {
+                    enqueueSnackbar(response.data.message, errorNotify);
+                }
             })
             .catch(error => {
+                setIsLoading(false);
                 console.log("Error during fetch street route");
                 console.log(error);
+                enqueueSnackbar("Error during fetch street route", errorNotify);
             })
     }, [])
 
@@ -40,6 +49,7 @@ function TrashCollect() {
     const handleBackStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     }
+
     return (
         <div>
             <HorizontalLinearStepper
@@ -51,12 +61,12 @@ function TrashCollect() {
                 <Button disabled={activeStep === (steps.length - 1)} onClick={handleNextStep}>Next</Button>
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
-                {streetRoutes.length > 0 ? (
-                    <StreetRouteTable
-                        streetRoutes={streetRoutes}
-                    />) : (
-                        <div>Fetching data ...</div>
-                    )}
+                {streetRoutes.length > 0
+                    ? <StreetRouteTable streetRoutes={streetRoutes} />
+                    : isLoading
+                        ? <LinearProgress />
+                        : <div>No Trash Area to process</div>
+                }
 
             </TabPanel>
             <TabPanel value={activeStep} index={1}>

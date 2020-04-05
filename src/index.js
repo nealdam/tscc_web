@@ -19,7 +19,7 @@ ReactDOM.render(
   <SnackbarProvider
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'right'
+      horizontal: 'left'
     }}>
     <App />
   </SnackbarProvider>,
