@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles, Button } from '@material-ui/core';
+import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import { streetRouteHeadCells } from '../../constants/headCells';
+import { streetRouteHeadCells, trashAreaHeadCells } from '../../constants/headCells';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function StreetRouteTable(props) {
+function TrashAreaTable(props) {
 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('numOfRequest');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { streetRoutes } = props;
+    const { trashAreas } = props;
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -64,14 +64,14 @@ function StreetRouteTable(props) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = streetRoutes.map((n) => n.street);
+            const newSelecteds = trashAreas.map((n) => n.street);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     }
 
-    const handleRowClick = (event, name) => {
+    const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
 
@@ -95,15 +95,9 @@ function StreetRouteTable(props) {
         setPage(newPage);
     };
 
-    const handleDetailClick = (event) => {
-        event.preventDefault();
-
-
-    }
-
     const isSelected = (street) => selected.indexOf(street) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, streetRoutes.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, trashAreas.length - page * rowsPerPage);
 
 
     const classes = useStyles();
@@ -122,11 +116,11 @@ function StreetRouteTable(props) {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={streetRoutes.length}
-                        headCells={streetRouteHeadCells}
+                        rowCount={trashAreas.length}
+                        headCells={trashAreaHeadCells}
                     />
                     <TableBody>
-                        {stableSort(streetRoutes, getComparator(order, orderBy))
+                        {stableSort(trashAreas, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                                 const isItemSelected = isSelected(row.street);
@@ -135,6 +129,7 @@ function StreetRouteTable(props) {
                                 return (
                                     <TableRow
                                         hover
+                                        onClick={(event) => handleClick(event, row.street)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -144,25 +139,16 @@ function StreetRouteTable(props) {
                                         <TableCell padding="checkbox">
                                             <Checkbox
                                                 checked={isItemSelected}
-                                                onClick={(event) => handleRowClick(event, row.street)}
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                             />
                                         </TableCell>
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.streetName}
+                                            {row.numReq}
                                         </TableCell>
-                                        <TableCell align="left" padding="none">{row.district}</TableCell>
-                                        <TableCell align="left" padding="none">{row.city}</TableCell>
-                                        <TableCell align="right">{row.listTrashAreas.length}</TableCell>
-                                        <TableCell align="left">
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={(event) => handleDetailClick(event)}
-                                            >
-                                                Detail
-                                            </Button>
-                                        </TableCell>
+                                        <TableCell align="left" padding="none">{row.size}</TableCell>
+                                        <TableCell align="left" padding="none">{row.weight}</TableCell>
+                                        <TableCell align="right">{row.type}</TableCell>
+                                        <TableCell align="left">Button</TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -176,7 +162,7 @@ function StreetRouteTable(props) {
             </TableContainer>
             <TablePagination
                 component="div"
-                count={streetRoutes.length}
+                count={trashAreas.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -185,8 +171,8 @@ function StreetRouteTable(props) {
     )
 }
 
-StreetRouteTable.propTypes = {
-    streetRoutes: PropTypes.array.isRequired,
+TrashAreaTable.propTypes = {
+    trashAreas: PropTypes.array.isRequired,
 }
 
-export default StreetRouteTable;
+export default TrashAreaTable;

@@ -1,9 +1,11 @@
-import { Button, ButtonGroup, TabPan, Typography, Box } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Button, ButtonGroup, Typography, Box } from '@material-ui/core';
+import React, { useState, useEffect, useContext } from 'react';
 import { collectTrashSteps } from '../../constants/steps';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
 import StreetRouteTable from '../../organisms/streetRouteTable/StreetRouteTable';
 import PropTypes from 'prop-types';
+import { getStreetRoute } from '../../services/operatorService';
+import { UserContext } from '../../context/PageProvider';
 
 function createStreetRoute(street, district, city, numReq) {
     return { street, district, city, numReq };
@@ -11,19 +13,25 @@ function createStreetRoute(street, district, city, numReq) {
 
 function TrashCollect() {
 
-    const [streetRoutes, setStreetRoutes] = useState([
-        createStreetRoute('Thành Công', 'Tân Phú', 'Hồ Chí Minh', 3),
-        createStreetRoute('Trương Vĩnh Ký', 'Tân Phú', 'Hồ Chí Minh', 10)
-    ]);
+    const userData = useContext(UserContext)
+    const [streetRoutes, setStreetRoutes] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const steps = collectTrashSteps;
 
-    // useEffect(() => {
-    //     console.log("Fetch street route");
-    //     setStreetRoutes(getStreetRoute(userData.userToken));
-    //     console.log("Result: ");
-    //     console.log(streetRoutes);
-    // }, [])
+    useEffect(() => {
+        console.log("Fetch street route");
+        // setStreetRoutes(getStreetRoute(userData.userToken));
+        getStreetRoute(userData.userToken)
+            .then(response => {
+                console.log("success");
+                console.log(response.data.content);
+                setStreetRoutes(response.data.content);
+            })
+            .catch(error => {
+                console.log("Error during fetch street route");
+                console.log(error);
+            })
+    }, [])
 
     const handleNextStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -43,9 +51,13 @@ function TrashCollect() {
                 <Button disabled={activeStep === (steps.length - 1)} onClick={handleNextStep}>Next</Button>
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
-                <StreetRouteTable
-                    streetRoutes={streetRoutes}
-                />
+                {streetRoutes.length > 0 ? (
+                    <StreetRouteTable
+                        streetRoutes={streetRoutes}
+                    />) : (
+                        <div>Fetching data ...</div>
+                    )}
+
             </TabPanel>
             <TabPanel value={activeStep} index={1}>
                 Driver table

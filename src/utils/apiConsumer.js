@@ -7,6 +7,7 @@ export function getApi(token, url) {
         method: 'get',
         url: url,
         headers: {
+            Accept: '*/*',
             Authorization: `Bearer ${token}`
         }
     })

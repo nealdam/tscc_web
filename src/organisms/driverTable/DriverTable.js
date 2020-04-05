@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles, Button } from '@material-ui/core';
+import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
 import { streetRouteHeadCells } from '../../constants/headCells';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function StreetRouteTable(props) {
+function DriverTable(props) {
 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('numOfRequest');
@@ -71,7 +71,7 @@ function StreetRouteTable(props) {
         setSelected([]);
     }
 
-    const handleRowClick = (event, name) => {
+    const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
 
@@ -94,12 +94,6 @@ function StreetRouteTable(props) {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    const handleDetailClick = (event) => {
-        event.preventDefault();
-
-
-    }
 
     const isSelected = (street) => selected.indexOf(street) !== -1;
 
@@ -135,6 +129,7 @@ function StreetRouteTable(props) {
                                 return (
                                     <TableRow
                                         hover
+                                        onClick={(event) => handleClick(event, row.street)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -144,25 +139,16 @@ function StreetRouteTable(props) {
                                         <TableCell padding="checkbox">
                                             <Checkbox
                                                 checked={isItemSelected}
-                                                onClick={(event) => handleRowClick(event, row.street)}
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                             />
                                         </TableCell>
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.streetName}
+                                            {row.street}
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.district}</TableCell>
                                         <TableCell align="left" padding="none">{row.city}</TableCell>
-                                        <TableCell align="right">{row.listTrashAreas.length}</TableCell>
-                                        <TableCell align="left">
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={(event) => handleDetailClick(event)}
-                                            >
-                                                Detail
-                                            </Button>
-                                        </TableCell>
+                                        <TableCell align="right">{row.numReq}</TableCell>
+                                        <TableCell align="left">Button</TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -185,8 +171,8 @@ function StreetRouteTable(props) {
     )
 }
 
-StreetRouteTable.propTypes = {
+DriverTable.propTypes = {
     streetRoutes: PropTypes.array.isRequired,
 }
 
-export default StreetRouteTable;
+export default DriverTable;
