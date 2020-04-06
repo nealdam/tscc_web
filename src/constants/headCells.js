@@ -7,13 +7,18 @@ export const streetRouteHeadCells = [
 ];
 
 export const trashAreaHeadCells = [
-    { id: 'numberOfRequest', numeric: false, disablePadding: true, label: 'Request number' },
+    { id: 'id', numeric: false, disablePadding: true, label: 'Id' },
+    { id: 'street', numeric: false, disablePadding: true, label: 'Street' },
+    { id: 'district', numeric: false, disablePadding: true, label: 'District' },
+    { id: 'city', numeric: false, disablePadding: true, label: 'City' },
     { id: 'size', numeric: false, disablePadding: true, label: 'Size(kg)' },
     { id: 'width', numeric: false, disablePadding: true, label: 'Width(m)' },
-    { id: 'type', numeric: false, disablePadding: true, label: 'Type' }
+    { id: 'type', numeric: false, disablePadding: true, label: 'Type' },
+    { id: 'numberOfRequest', numeric: false, disablePadding: true, label: 'Request number' },
 ]
 
 export const driverHeadCells = [
     { id: 'name', nummeric: false, disablePadding: true, label: 'Name' },
+    { id: 'employeeCode', nummeric: false, disablePadding: true, label: 'Employee Code' },
 
 ]

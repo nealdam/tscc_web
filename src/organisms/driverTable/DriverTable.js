@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import { streetRouteHeadCells } from '../../constants/headCells';
+import { streetRouteHeadCells, driverHeadCells } from '../../constants/headCells';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
 function DriverTable(props) {
 
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('numOfRequest');
-    const [selected, setSelected] = useState([]);
+    const [orderBy, setOrderBy] = useState('numberOfRequest');
+    // const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { streetRoutes } = props;
+    const { drivers, selected, setSelected } = props;
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -63,30 +63,17 @@ function DriverTable(props) {
     };
 
     const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = streetRoutes.map((n) => n.street);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
+        // if (event.target.checked) {
+        //     const newSelecteds = drivers.map((n) => n.id);
+        //     setSelected(newSelecteds);
+        //     return;
+        // }
+        // setSelected([]);
     }
 
     const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
 
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
+        let newSelected = [name]
 
         setSelected(newSelected);
     };
@@ -95,9 +82,9 @@ function DriverTable(props) {
         setPage(newPage);
     };
 
-    const isSelected = (street) => selected.indexOf(street) !== -1;
+    const isSelected = (id) => selected.indexOf(id) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, streetRoutes.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, drivers.length - page * rowsPerPage);
 
 
     const classes = useStyles();
@@ -116,24 +103,25 @@ function DriverTable(props) {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={streetRoutes.length}
-                        headCells={streetRouteHeadCells}
+                        rowCount={drivers.length}
+                        headCells={driverHeadCells}
+                        isDisableCheckAll={true}
                     />
                     <TableBody>
-                        {stableSort(streetRoutes, getComparator(order, orderBy))
+                        {stableSort(drivers, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.street);
+                                const isItemSelected = isSelected(row.id);
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.street)}
+                                        onClick={(event) => handleClick(event, row.id)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.street}
+                                        key={row.id}
                                         selected={isItemSelected}
                                     >
                                         <TableCell padding="checkbox">
@@ -143,12 +131,9 @@ function DriverTable(props) {
                                             />
                                         </TableCell>
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.street}
+                                            {row.name}
                                         </TableCell>
-                                        <TableCell align="left" padding="none">{row.district}</TableCell>
-                                        <TableCell align="left" padding="none">{row.city}</TableCell>
-                                        <TableCell align="right">{row.numReq}</TableCell>
-                                        <TableCell align="left">Button</TableCell>
+                                        <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -162,7 +147,7 @@ function DriverTable(props) {
             </TableContainer>
             <TablePagination
                 component="div"
-                count={streetRoutes.length}
+                count={drivers.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -172,7 +157,9 @@ function DriverTable(props) {
 }
 
 DriverTable.propTypes = {
-    streetRoutes: PropTypes.array.isRequired,
+    drivers: PropTypes.array.isRequired,
+    selected: PropTypes.array.isRequired,
+    setSelected: PropTypes.func.isRequired,
 }
 
 export default DriverTable;

@@ -1,46 +1,76 @@
-import { Button, ButtonGroup, Typography, Box, LinearProgress } from '@material-ui/core';
-import React, { useState, useEffect, useContext } from 'react';
-import { collectTrashSteps } from '../../constants/steps';
-import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
-import StreetRouteTable from '../../organisms/streetRouteTable/StreetRouteTable';
-import PropTypes from 'prop-types';
-import { getStreetRoute } from '../../services/operatorService';
-import { UserContext } from '../../context/PageProvider';
+import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import { successNotify, errorNotify } from '../../constants/notistackOption';
+import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { errorNotify, successNotify } from '../../constants/notistackOption';
+import { collectTrashSteps } from '../../constants/steps';
+import { UserContext } from '../../context/PageProvider';
+import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
+import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
+import { getTrashAreas, getDrivers } from '../../services/operatorService';
+import DriverTable from '../../organisms/driverTable/DriverTable';
+import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 
 function TrashCollect() {
     const { enqueueSnackbar } = useSnackbar();
     const [isLoading, setIsLoading] = useState(false);
 
     const userData = useContext(UserContext)
-    const [streetRoutes, setStreetRoutes] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const steps = collectTrashSteps;
 
+    const [trashAreas, setTrashAreas] = useState([]);
+    const [selectedTrashId, setSelectedTrashId] = useState([]);
+
+    const [drivers, setDrivers] = useState([]);
+    const [selectedDriverId, setSelectedDriverId] = useState([]);
+
+
 
     useEffect(() => {
-        console.log("Fetch street route");
+        console.log("Fetch Trash Area");
         setIsLoading(true);
         // setStreetRoutes(getStreetRoute(userData.userToken));
-        getStreetRoute(userData.userToken)
+        getTrashAreas(userData.userToken)
             .then(response => {
                 setIsLoading(false);
 
                 if (response.data.success) {
-                    enqueueSnackbar("Fetch street route data success", successNotify);
-                    setStreetRoutes(response.data.content);
+                    enqueueSnackbar("Fetch Trash Area data success", successNotify);
+                    setTrashAreas(response.data.content);
                 } else {
                     enqueueSnackbar(response.data.message, errorNotify);
                 }
             })
             .catch(error => {
                 setIsLoading(false);
-                console.log("Error during fetch street route");
+                console.log("Error during fetch Trash Area");
                 console.log(error);
-                enqueueSnackbar("Error during fetch street route", errorNotify);
+                enqueueSnackbar("Error during fetch Trash Area", errorNotify);
+            })
+
+        getDrivers(userData.userToken)
+            .then(response => {
+                setIsLoading(false);
+
+                if (response.data.success) {
+                    enqueueSnackbar("Fetch Drivers data success", successNotify);
+                    setDrivers(response.data.content);
+                } else {
+                    enqueueSnackbar(response.data.message, errorNotify);
+                }
+            })
+            .catch(error => {
+                setIsLoading(false);
+                console.log("Error during fetch Drivers");
+                console.log(error);
+                enqueueSnackbar("Error during fetch Drivers", errorNotify);
             })
     }, [])
+
+    const handleSendCollectTrash = () => {
+
+    }
 
     const handleNextStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -48,6 +78,52 @@ function TrashCollect() {
 
     const handleBackStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
+
+    const getSelectedTrashList = () => {
+
+        let selectedTrash = [];
+
+        selectedTrashId.forEach((id, index) => {
+
+            let value = trashAreas.find((trash) => {
+                return trash.id === id;
+            })
+
+            selectedTrash.push(value);
+        })
+
+        return selectedTrash;
+    }
+
+    const getSelectedDriver = () => {
+        let selectedDriver = null;
+
+        selectedDriver = drivers.find((driver) => {
+            return driver.id === selectedDriverId[0];
+        })
+
+        return selectedDriver;
+    }
+
+    const isNext = () => {
+        if (activeStep === 0) {
+            if (selectedTrashId.length === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (activeStep === 1) {
+            if (selectedDriverId.length === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (activeStep === (steps.length - 1)) {
+            return true;
+        }
+
+        return true;
     }
 
     return (
@@ -58,11 +134,13 @@ function TrashCollect() {
             />
             <ButtonGroup color="primary" aria-label="outlined primary button group">
                 <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
-                <Button disabled={activeStep === (steps.length - 1)} onClick={handleNextStep}>Next</Button>
+                <Button disabled={isNext()} onClick={handleNextStep}>Next</Button>
+                {activeStep === (steps.length - 1) && <Button>Confirm</Button>
+                }
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
-                {streetRoutes.length > 0
-                    ? <StreetRouteTable streetRoutes={streetRoutes} />
+                {trashAreas.length > 0
+                    ? <TrashAreaTable trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
                     : isLoading
                         ? <LinearProgress />
                         : <div>No Trash Area to process</div>
@@ -70,10 +148,10 @@ function TrashCollect() {
 
             </TabPanel>
             <TabPanel value={activeStep} index={1}>
-                Driver table
+                <DriverTable drivers={drivers} selected={selectedDriverId} setSelected={setSelectedDriverId} />
             </TabPanel>
             <TabPanel value={activeStep} index={2}>
-                Confirm
+                <TrashCollectForm selectedTrash={getSelectedTrashList()} selectedDriver={getSelectedDriver()} />
             </TabPanel>
         </div>
     );

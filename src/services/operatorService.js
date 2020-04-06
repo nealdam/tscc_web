@@ -1,7 +1,11 @@
 import { getApi } from '../utils/apiConsumer';
-import { URL_GET_STREET_ROUTES } from '../constants/serverUrl';
+import { URL_GET_TRASH_AREAS, URL_GET_DRIVERS } from '../constants/serverUrl';
 
 
-export function getStreetRoute(token) {
-    return getApi(token, URL_GET_STREET_ROUTES)
+export function getTrashAreas(token) {
+    return getApi(token, URL_GET_TRASH_AREAS);
+}
+
+export function getDrivers(token) {
+    return getApi(token, URL_GET_DRIVERS);
 }
