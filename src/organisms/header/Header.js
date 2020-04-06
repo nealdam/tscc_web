@@ -24,7 +24,7 @@ export default function Header() {
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          /Page title/
+          Trash Support Collection & Classification
         </Typography>
         <Typography variant="subtitle1" style={{ marginRight: 16 }}>
           {userData.userEmail}
