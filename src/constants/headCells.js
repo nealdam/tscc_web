@@ -5,10 +5,11 @@ export const trashAreaHeadCells = [
     { id: 'type', numeric: false, disablePadding: true, label: 'Type' },
     { id: 'numberOfRequest', numeric: false, disablePadding: true, label: 'Request number' },
     { id: 'createAt', numeric: false, disablePadding: true, label: 'Last update' },
+    { id: 'detail', numeric: false, disablePadding: true, label: 'Details' },
 ]
 
 export const driverHeadCells = [
-    { id: 'name', nummeric: false, disablePadding: true, label: 'Name' },
-    { id: 'employeeCode', nummeric: false, disablePadding: true, label: 'Employee Code' },
+    { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+    { id: 'employeeCode', numeric: false, disablePadding: true, label: 'Employee Code' },
 
 ]

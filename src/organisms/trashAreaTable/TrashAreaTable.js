@@ -1,9 +1,11 @@
-import { Button, Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, FormControl, InputLabel, Select, MenuItem, IconButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { trashAreaHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import { database } from 'firebase';
+import CreateIcon from '@material-ui/icons/Create';
+import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
+import { isToday } from '../../utils/dateUtil';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -39,6 +41,9 @@ function TrashAreaTable(props) {
 
     const [districts, setDistricts] = useState(['']);
     const [selectedDistrict, setSelectedDistrict] = useState('');
+
+    const [trashAreaDetail, setTrashAreaDetail] = useState({});
+    const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
 
     useEffect(() => {
         getCities();
@@ -142,16 +147,9 @@ function TrashAreaTable(props) {
         setPage(newPage);
     };
 
-    const handleDetailClick = (event) => {
-        event.preventDefault();
-    }
-
-    const isToday = (someDate) => {
-        const today = new Date();
-
-        return someDate.getDate() == today.getDate() &&
-            someDate.getMonth() == today.getMonth() &&
-            someDate.getFullYear() == today.getFullYear()
+    const handleDetailClick = (trashArea) => {
+        setTrashAreaDetail(trashArea);
+        setIsOpenTrashAreaDetail(true);
     }
 
     const isSelected = (street) => selected.indexOf(street) !== -1;
@@ -240,8 +238,15 @@ function TrashAreaTable(props) {
                                         <TableCell align="left">{row.width.name}</TableCell>
                                         <TableCell align="left">{row.type.name}</TableCell>
                                         <TableCell align="center">{row.numberOfRequest}</TableCell>
-                                        <TableCell align="left">
-                                            {date}
+                                        <TableCell align="left">{date}</TableCell>
+                                        <TableCell align="center">
+                                            <IconButton
+                                                color="default"
+                                                component="span"
+                                                onClick={() => handleDetailClick(row)}
+                                            >
+                                                <CreateIcon />
+                                            </IconButton>
                                         </TableCell>
                                         {/* <TableCell align="left">
                                             <Button
@@ -270,6 +275,14 @@ function TrashAreaTable(props) {
                 page={page}
                 onChangePage={handleChangePage}
             />
+            {isOpenTrashAreaDetail &&
+                <TrashAreaDetailDialog
+                    open={isOpenTrashAreaDetail}
+                    setOpen={setIsOpenTrashAreaDetail}
+                    trashArea={trashAreaDetail}
+                />
+            }
+
         </div>
     )
 }
