@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { TableContainer, Table, TableBody, TableRow, Checkbox, TableCell, TablePagination, makeStyles } from '@material-ui/core';
+import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { driverHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import { streetRouteHeadCells, driverHeadCells } from '../../constants/headCells';
 
 const useStyles = makeStyles((theme) => ({
     table: {

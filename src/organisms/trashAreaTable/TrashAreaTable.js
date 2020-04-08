@@ -1,10 +1,15 @@
-import { Button, Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
+import { Button, Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { trashAreaHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
+import { database } from 'firebase';
 
 const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
     table: {
         minWidth: 750,
     },
@@ -28,6 +33,41 @@ function TrashAreaTable(props) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const { trashAreas, selected, setSelected } = props;
+
+    const [cities, setCities] = useState(['']);
+    const [selectedCity, setSelectedCity] = useState('');
+
+    const [districts, setDistricts] = useState(['']);
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+
+    useEffect(() => {
+        getCities();
+        getDistricts();
+    }, []);
+
+    const getCities = () => {
+        let newCities = [];
+
+        trashAreas.map((trashArea) => {
+            if (!(newCities.includes(trashArea.city))) {
+                newCities = newCities.concat(trashArea.city);
+            }
+        })
+        setCities(newCities);
+        setSelectedCity(newCities[0]);
+    }
+
+    const getDistricts = () => {
+        let newDistricts = [];
+
+        trashAreas.map((trashArea) => {
+            if (!(newDistricts.includes(trashArea.district))) {
+                newDistricts = newDistricts.concat(trashArea.district);
+            }
+        })
+        setDistricts(newDistricts);
+        setSelectedDistrict(newDistricts[0]);
+    }
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -53,6 +93,14 @@ function TrashAreaTable(props) {
             return a[1] - b[1];
         });
         return stabilizedThis.map((el) => el[0]);
+    }
+
+    const handleCityChange = (event) => {
+        console.log(event.target.value);
+    }
+
+    const handleDistrictChange = (event) => {
+        console.log(event.target.value);
     }
 
     const handleRequestSort = (event, property) => {
@@ -96,8 +144,14 @@ function TrashAreaTable(props) {
 
     const handleDetailClick = (event) => {
         event.preventDefault();
+    }
 
+    const isToday = (someDate) => {
+        const today = new Date();
 
+        return someDate.getDate() == today.getDate() &&
+            someDate.getMonth() == today.getMonth() &&
+            someDate.getFullYear() == today.getFullYear()
     }
 
     const isSelected = (street) => selected.indexOf(street) !== -1;
@@ -109,6 +163,34 @@ function TrashAreaTable(props) {
 
     return (
         <div>
+            {/* <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>City</InputLabel>
+                <Select
+                    value={selectedCity}
+                    label="City"
+                    onChange={handleCityChange}
+                >
+                    {cities.map((city) => (
+                        <MenuItem key={city} value={city}>
+                            {city}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl> */}
+            <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel>District</InputLabel>
+                <Select
+                    value={selectedDistrict}
+                    label="District"
+                    onChange={handleDistrictChange}
+                >
+                    {districts.map((district) => (
+                        <MenuItem key={district} value={district}>
+                            {district}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -130,6 +212,12 @@ function TrashAreaTable(props) {
                             .map((row, index) => {
                                 const isItemSelected = isSelected(row.id);
                                 const labelId = `enhanced-table-checkbox-${index}`;
+                                const d = new Date(row.createAt);
+                                let date = d.toLocaleString();
+
+                                if (isToday(d)) {
+                                    date = d.toLocaleTimeString();
+                                }
 
                                 return (
                                     <TableRow
@@ -147,16 +235,14 @@ function TrashAreaTable(props) {
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                             />
                                         </TableCell>
-                                        <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.id}
-                                        </TableCell>
                                         <TableCell align="left" padding="none">{row.street}</TableCell>
-                                        <TableCell align="left" padding="none">{row.district}</TableCell>
-                                        <TableCell align="left" padding="none">{row.city}</TableCell>
                                         <TableCell align="left">{row.size.name}</TableCell>
                                         <TableCell align="left">{row.width.name}</TableCell>
                                         <TableCell align="left">{row.type.name}</TableCell>
-                                        <TableCell align="right">{row.numberOfRequest}</TableCell>
+                                        <TableCell align="center">{row.numberOfRequest}</TableCell>
+                                        <TableCell align="left">
+                                            {date}
+                                        </TableCell>
                                         {/* <TableCell align="left">
                                             <Button
                                                 variant="contained"

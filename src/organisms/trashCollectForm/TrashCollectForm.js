@@ -1,6 +1,6 @@
-import React from 'react';
+import { Grid, Table, TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableRow, Grid, TableHead, Typography } from '@material-ui/core';
+import React from 'react';
 
 function TrashCollectForm(props) {
 

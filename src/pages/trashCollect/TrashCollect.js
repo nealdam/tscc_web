@@ -1,15 +1,15 @@
 import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { errorNotify, successNotify } from '../../constants/notistackOption';
 import { collectTrashSteps } from '../../constants/steps';
 import { UserContext } from '../../context/PageProvider';
+import DriverTable from '../../organisms/driverTable/DriverTable';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
-import { getTrashAreas, getDrivers, sendDirection } from '../../services/operatorService';
-import DriverTable from '../../organisms/driverTable/DriverTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
+import { getDrivers, getTrashAreas, sendDirection } from '../../services/operatorService';
 
 function TrashCollect() {
     const { enqueueSnackbar } = useSnackbar();
@@ -25,16 +25,10 @@ function TrashCollect() {
     const [drivers, setDrivers] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
 
-
-
-    useEffect(() => {
-        console.log("Fetch Trash Area");
+    const fetchTrashAreas = () => {
         setIsLoading(true);
-        // setStreetRoutes(getStreetRoute(userData.userToken));
         getTrashAreas(userData.userToken)
             .then(response => {
-                setIsLoading(false);
-
                 if (response.data.success) {
                     enqueueSnackbar("Fetch Trash Area data success", successNotify);
                     setTrashAreas(response.data.content);
@@ -43,16 +37,18 @@ function TrashCollect() {
                 }
             })
             .catch(error => {
-                setIsLoading(false);
                 console.log("Error during fetch Trash Area");
                 console.log(error);
                 enqueueSnackbar("Error during fetch Trash Area", errorNotify);
             })
+            .finally(
+                setIsLoading(false)
+            );
+    }
 
+    const fetchDrivers = () => {
         getDrivers(userData.userToken)
             .then(response => {
-                setIsLoading(false);
-
                 if (response.data.success) {
                     enqueueSnackbar("Fetch Drivers data success", successNotify);
                     setDrivers(response.data.content);
@@ -61,12 +57,15 @@ function TrashCollect() {
                 }
             })
             .catch(error => {
-                setIsLoading(false);
                 console.log("Error during fetch Drivers");
                 console.log(error);
                 enqueueSnackbar("Error during fetch Drivers", errorNotify);
             })
-    }, [])
+    }
+
+    const handleFetchTrashAreas = () => {
+        fetchTrashAreas();
+    }
 
     const handleSendCollectTrash = () => {
         const driverId = selectedDriverId.shift();
@@ -98,7 +97,6 @@ function TrashCollect() {
     }
 
     const getSelectedTrashList = () => {
-
         let selectedTrash = [];
 
         selectedTrashId.forEach((id, index) => {
@@ -160,7 +158,7 @@ function TrashCollect() {
                     ? <TrashAreaTable trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
                     : isLoading
                         ? <LinearProgress />
-                        : <div>No Trash Area to process</div>
+                        : <div><Button variant="contained" color="primary" onClick={handleFetchTrashAreas}>Fetch Trash Areas</Button></div>
                 }
 
             </TabPanel>
