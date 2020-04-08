@@ -12,3 +12,15 @@ export function getApi(token, url) {
         }
     })
 }
+
+export function postApi(token, url, body) {
+    return axios({
+        method: "post",
+        url: url,
+        headers: {
+            Accept: '*/*',
+            Authorization: `Bearer ${token}`
+        },
+        data: body
+    })
+}

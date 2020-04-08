@@ -7,7 +7,7 @@ import { collectTrashSteps } from '../../constants/steps';
 import { UserContext } from '../../context/PageProvider';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
-import { getTrashAreas, getDrivers } from '../../services/operatorService';
+import { getTrashAreas, getDrivers, sendDirection } from '../../services/operatorService';
 import DriverTable from '../../organisms/driverTable/DriverTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 
@@ -69,7 +69,24 @@ function TrashCollect() {
     }, [])
 
     const handleSendCollectTrash = () => {
+        const driverId = selectedDriverId.shift();
+        const tempTrashAreaId = selectedTrashId;
 
+        const body = { driverId, tempTrashAreaId };
+
+        sendDirection(userData.userToken, body)
+            .then(response => {
+                if (response.data.success) {
+                    enqueueSnackbar("Send direction success", successNotify);
+                } else {
+                    enqueueSnackbar("Fail to send direction", errorNotify);
+                }
+            })
+            .catch(error => {
+                console.log("Error during send direction");
+                console.log(error);
+                enqueueSnackbar("Error during send direction", errorNotify);
+            })
     }
 
     const handleNextStep = () => {
@@ -135,7 +152,7 @@ function TrashCollect() {
             <ButtonGroup color="primary" aria-label="outlined primary button group">
                 <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
                 <Button disabled={isNext()} onClick={handleNextStep}>Next</Button>
-                {activeStep === (steps.length - 1) && <Button>Confirm</Button>
+                {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
                 }
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
