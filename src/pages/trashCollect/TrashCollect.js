@@ -1,7 +1,7 @@
 import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { errorNotify, successNotify } from '../../constants/notistackOption';
 import { collectTrashSteps } from '../../constants/steps';
 import { UserContext } from '../../context/PageProvider';
@@ -24,6 +24,11 @@ function TrashCollect() {
 
     const [drivers, setDrivers] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
+
+    useEffect(() => {
+        fetchTrashAreas();
+        fetchDrivers();
+    }, [])
 
     const fetchTrashAreas = () => {
         setIsLoading(true);

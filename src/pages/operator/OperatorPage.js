@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
 import TrashCollect from '../trashCollect/TrashCollect'
+import CollectStatus from '../collectStatus/CollectStatus'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -29,7 +30,7 @@ export default function OperatorPage() {
                 <div className={classes.toolbar} />
                 <Switch>
                     <Route exact path={path} >
-                        <div>Operator home page</div>
+                        <CollectStatus />
                     </Route>
                     <Route path={`${path}/collect`} >
                         <TrashCollect />

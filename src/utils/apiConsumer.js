@@ -2,13 +2,25 @@
 
 const axios = require('axios').default;
 
+export function getImage(token, url) {
+    return axios({
+        method: "get",
+        url: url,
+        responseType: 'arraybuffer',
+        headers: {
+            Accept: '*/*',
+            Authorization: `Bearer ${token}`
+        }
+    })
+}
+
 export function getApi(token, url) {
     return axios({
         method: 'get',
         url: url,
         headers: {
             Accept: '*/*',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         }
     })
 }

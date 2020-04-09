@@ -1,7 +1,11 @@
-import React from 'react';
-import { Dialog, DialogTitle, DialogContent, Grid, TextField, DialogActions, Button, makeStyles, GridList } from '@material-ui/core';
+import React, { useState, useContext, useEffect } from 'react';
+import { Dialog, DialogTitle, DialogContent, Grid, TextField, DialogActions, Button, makeStyles, GridList, GridListTile, LinearProgress } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { isToday } from '../../utils/dateUtil';
+import { getImage, getImageAPI } from '../../services/operatorService';
+import { UserContext } from '../../context/PageProvider';
+
+const axios = require('axios').default;
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -17,10 +21,50 @@ function TrashAreaDetailDialog(props) {
 
     const classes = useStyles();
 
+    const userData = useContext(UserContext);
+
+    const [isImageLoading, setIsImageLoading] = useState(false);
+
+    const [images, setImages] = useState([]);
     const { open, setOpen, trashArea } = props;
+
+    useEffect(() => {
+        fetchImages();
+    }, [])
 
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const fetchImages = () => {
+        setIsImageLoading(true);
+
+        let imageDirs = [];
+
+        trashArea.ltrashForms.map(trashForm => {
+            trashForm.imageDirs.map(imageDir => {
+                imageDirs.push(imageDir);
+            })
+        })
+
+        console.log(imageDirs);
+
+        getImageAPI(userData.userToken, imageDirs)
+            .then(responseArr => {
+                let newImages = [];
+
+                responseArr.forEach(response => {
+                    newImages.push(response.data);
+                })
+
+                setImages(newImages);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => {
+                setIsImageLoading(false);
+            });
     }
 
     const dateOfString = (dateString) => {
@@ -43,9 +87,19 @@ function TrashAreaDetailDialog(props) {
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={7}>
-                        <GridList cellHeight={160} cols={3} spacing={4}>
+                        {isImageLoading
+                            ? <LinearProgress />
+                            : <GridList cellHeight={160} cols={3} spacing={4}>
+                                {images.map((image, index) => {
+                                    return (
+                                        <GridListTile key={index} col={1}>
+                                            <img src={image} alt={index} />
+                                        </GridListTile>
+                                    )
+                                })}
+                            </GridList>
+                        }
 
-                        </GridList>
                     </Grid>
                     <Grid item xs={5}>
                         <Grid item xs={12}>
