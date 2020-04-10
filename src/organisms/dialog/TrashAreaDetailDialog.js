@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { isToday } from '../../utils/dateUtil';
 import { getImage, getImageAPI } from '../../services/operatorService';
 import { UserContext } from '../../context/PageProvider';
+import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
 
 const axios = require('axios').default;
 
@@ -14,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     gridList: {
         width: "100%",
         height: 450,
+    },
+    map: {
+        marginTop: theme.spacing(2)
     }
 }))
 
@@ -37,6 +41,7 @@ function TrashAreaDetailDialog(props) {
     }
 
     const fetchImages = () => {
+        console.log("Fetch image");
         setIsImageLoading(true);
 
         let imageDirs = [];
@@ -46,8 +51,6 @@ function TrashAreaDetailDialog(props) {
                 imageDirs.push(imageDir);
             })
         })
-
-        console.log(imageDirs);
 
         getImageAPI(userData.userToken, imageDirs)
             .then(responseArr => {
@@ -82,7 +85,6 @@ function TrashAreaDetailDialog(props) {
             fullWidth={true}
             maxWidth={'md'}
         >
-            {console.log(trashArea.size)}
             <DialogTitle>Trash Area Detail</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
@@ -150,6 +152,13 @@ function TrashAreaDetailDialog(props) {
                                 size="small"
                                 fullWidth={true}
                                 value={dateOfString(trashArea.createAt)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TrashAreaMap
+                                className={classes.map}
+                                latitude={trashArea.latitude}
+                                longitude={trashArea.longitude}
                             />
                         </Grid>
                     </Grid>

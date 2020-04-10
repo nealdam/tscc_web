@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "firebase": "^7.8.2",
+    "google-map-react": "^1.1.7",
     "notistack": "^0.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
