@@ -86,10 +86,10 @@ function TrashAreaDetailDialog(props) {
             <DialogTitle>Trash Area Detail</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
-                    <Grid item xs={7}>
+                    <Grid item xs={7} >
                         {isImageLoading
                             ? <LinearProgress />
-                            : <GridList cellHeight={160} cols={3} spacing={4}>
+                            : <GridList cellHeight={160} cols={3} spacing={4} style={{ height: 550 }} >
                                 {images.map((image, index) => {
                                     return (
                                         <GridListTile key={index} col={1}>
