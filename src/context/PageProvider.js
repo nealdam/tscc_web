@@ -39,6 +39,7 @@ class PageProvider extends Component {
         auth.onAuthStateChanged(userAuth => {
             if (userAuth) {
                 userAuth.getIdToken().then(token => {
+                    console.log("Token setted");
                     this.state.userData.setToken(token);
                 })
                 this.state.userData.setEmail(userAuth.email);

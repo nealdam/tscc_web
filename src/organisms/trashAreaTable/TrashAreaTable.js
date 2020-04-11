@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { trashAreaHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import CreateIcon from '@material-ui/icons/Create';
+import InfoIcon from '@material-ui/icons/Info';
 import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
 import { isToday } from '../../utils/dateUtil';
 
@@ -261,7 +261,7 @@ function TrashAreaTable(props) {
                                                 component="span"
                                                 onClick={() => handleDetailClick(row)}
                                             >
-                                                <CreateIcon />
+                                                <InfoIcon />
                                             </IconButton>
                                         </TableCell>
                                         {/* <TableCell align="left">

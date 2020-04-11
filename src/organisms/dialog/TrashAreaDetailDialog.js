@@ -111,6 +111,9 @@ function TrashAreaDetailDialog(props) {
                                 label="Address"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={`${trashArea.street}, ${trashArea.district}, ${trashArea.city}`}
                             />
                             <TextField
@@ -119,6 +122,9 @@ function TrashAreaDetailDialog(props) {
                                 label="Number of request"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={trashArea.numberOfRequest}
                             />
                             <TextField
@@ -127,6 +133,9 @@ function TrashAreaDetailDialog(props) {
                                 label="Size"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={trashArea.size.name}
                             />
                             <TextField
@@ -135,6 +144,9 @@ function TrashAreaDetailDialog(props) {
                                 label="Width"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={trashArea.width.name}
                             />
                             <TextField
@@ -143,6 +155,9 @@ function TrashAreaDetailDialog(props) {
                                 label="Type"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={trashArea.type.name}
                             />
                             <TextField
@@ -151,10 +166,13 @@ function TrashAreaDetailDialog(props) {
                                 label="Last update"
                                 size="small"
                                 fullWidth={true}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
                                 value={dateOfString(trashArea.createAt)}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{ marginTop: 5 }}>
                             <TrashAreaMap
                                 className={classes.map}
                                 latitude={trashArea.latitude}

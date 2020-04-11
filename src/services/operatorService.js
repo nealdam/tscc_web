@@ -1,4 +1,4 @@
-import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH } from '../constants/serverUrl';
+import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH, URL_GET_COLLECT_JOB } from '../constants/serverUrl';
 
 const axios = require('axios').default;
 
@@ -65,4 +65,8 @@ export function getImageAPI(token, listImageNames) {
     });
 
     return axios.all(requests);
+}
+
+export function getCollectJob(token) {
+    return axios.get(URL_GET_COLLECT_JOB, getConfig(token));
 }

@@ -27,6 +27,7 @@ function TrashAreaMap(props) {
                 defaultZoom={zoom}
             >
                 <PlaceIcon
+                    style={{ marginBottom: 10 }}
                     color="secondary"
                     lat={latitude}
                     lng={longitude}
