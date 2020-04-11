@@ -161,9 +161,7 @@ function TrashCollect() {
             <TabPanel value={activeStep} index={0}>
                 {trashAreas.length > 0
                     ? <TrashAreaTable trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
-                    : isLoading
-                        ? <LinearProgress />
-                        : <div><Button variant="contained" color="primary" onClick={handleFetchTrashAreas}>Fetch Trash Areas</Button></div>
+                    : isLoading && <LinearProgress />
                 }
 
             </TabPanel>

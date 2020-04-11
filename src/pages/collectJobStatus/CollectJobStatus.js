@@ -1,12 +1,10 @@
 import React from 'react'
 
-function CollectStatus() {
-
-
+function CollectJobStatus() {
 
     return (
         <div>collect status</div>
     )
 }
 
-export default CollectStatus;
+export default CollectJobStatus;

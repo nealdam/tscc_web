@@ -42,6 +42,8 @@ function TrashAreaTable(props) {
     const [districts, setDistricts] = useState(['']);
     const [selectedDistrict, setSelectedDistrict] = useState('');
 
+    const [displayTrashAreas, setDisplayTrashAreas] = useState([]);
+
     const [trashAreaDetail, setTrashAreaDetail] = useState({});
     const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
 
@@ -72,6 +74,7 @@ function TrashAreaTable(props) {
         })
         setDistricts(newDistricts);
         setSelectedDistrict(newDistricts[0]);
+        setNewDistrict(newDistricts[0]);
     }
 
     function descendingComparator(a, b, orderBy) {
@@ -105,7 +108,20 @@ function TrashAreaTable(props) {
     }
 
     const handleDistrictChange = (event) => {
-        console.log(event.target.value);
+        setSelectedDistrict(event.target.value);
+        setNewDistrict(event.target.value);
+    }
+
+    const setNewDistrict = (district) => {
+        let newDisplayTrashArea = [];
+
+        trashAreas.map(trashArea => {
+            if (trashArea.district === district) {
+                newDisplayTrashArea.push(trashArea);
+            }
+        })
+
+        setDisplayTrashAreas(newDisplayTrashArea);
     }
 
     const handleRequestSort = (event, property) => {
@@ -201,11 +217,11 @@ function TrashAreaTable(props) {
                         orderBy={orderBy}
                         onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
-                        rowCount={trashAreas.length}
+                        rowCount={displayTrashAreas.length}
                         headCells={trashAreaHeadCells}
                     />
                     <TableBody>
-                        {stableSort(trashAreas, getComparator(order, orderBy))
+                        {stableSort(displayTrashAreas, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                                 const isItemSelected = isSelected(row.id);

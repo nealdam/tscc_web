@@ -30,7 +30,6 @@ function TrashAreaMap(props) {
                     color="secondary"
                     lat={latitude}
                     lng={longitude}
-                    text="Marker"
                 />
             </GoogleMapReact>
         </div>
