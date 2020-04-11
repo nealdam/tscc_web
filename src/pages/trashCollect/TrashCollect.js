@@ -10,6 +10,7 @@ import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLin
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 import { getDrivers, getTrashAreas, sendDirection } from '../../services/operatorService';
+import { useHistory } from 'react-router-dom';
 
 function TrashCollect() {
     const { enqueueSnackbar } = useSnackbar();
@@ -24,6 +25,8 @@ function TrashCollect() {
 
     const [drivers, setDrivers] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
+
+    const history = useHistory();
 
     useEffect(() => {
         fetchTrashAreas();
@@ -78,6 +81,8 @@ function TrashCollect() {
 
         const body = { driverId, tempTrashAreaId };
 
+
+
         sendDirection(userData.userToken, body)
             .then(response => {
                 if (response.data.success) {
@@ -90,6 +95,9 @@ function TrashCollect() {
                 console.log("Error during send direction");
                 console.log(error);
                 enqueueSnackbar("Error during send direction", errorNotify);
+            })
+            .finally(() => {
+                history.push("/operator");
             })
     }
 

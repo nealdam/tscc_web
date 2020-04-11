@@ -1,8 +1,9 @@
-import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
+import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, IconButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { driverHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -23,12 +24,18 @@ const useStyles = makeStyles((theme) => ({
 
 function DriverTable(props) {
 
+    const classes = useStyles();
+
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('numberOfRequest');
     // const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const { drivers, selected, setSelected } = props;
+
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, drivers.length - page * rowsPerPage);
+
+    const isSelected = (id) => selected.indexOf(id) !== -1;
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -71,6 +78,10 @@ function DriverTable(props) {
         // setSelected([]);
     }
 
+    const handleDetailClick = (driver) => {
+
+    }
+
     const handleClick = (event, name) => {
 
         let newSelected = [name]
@@ -81,13 +92,6 @@ function DriverTable(props) {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    const isSelected = (id) => selected.indexOf(id) !== -1;
-
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, drivers.length - page * rowsPerPage);
-
-
-    const classes = useStyles();
 
     return (
         <div>
@@ -134,6 +138,16 @@ function DriverTable(props) {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
+                                        <TableCell align="left" padding="none">{row.phone}</TableCell>
+                                        <TableCell align="center">
+                                            <IconButton
+                                                color="default"
+                                                component="span"
+                                                onClick={() => handleDetailClick(row)}
+                                            >
+                                                <CreateIcon />
+                                            </IconButton>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}

@@ -1,4 +1,4 @@
-import { Grid, Table, TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
+import { Grid, Table, TableBody, TableCell, TableRow, Typography, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -16,8 +16,9 @@ function TrashCollectForm(props) {
                             {selectedTrash.map((trash) => (
                                 <TableRow key={trash.id}>
                                     <TableCell>{trash.street}</TableCell>
-                                    <TableCell>{trash.district}</TableCell>
-                                    <TableCell>{trash.city}</TableCell>
+                                    <TableCell>{trash.size.name}</TableCell>
+                                    <TableCell>{trash.width.name}</TableCell>
+                                    <TableCell>{trash.type.name}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -25,8 +26,26 @@ function TrashCollectForm(props) {
                 </Grid>
                 <Grid item xs={5}>
                     <Typography variant="h4">Selected Driver</Typography>
-                    <Typography style={{ marginTop: 12 }}>{selectedDriver.name}</Typography>
-                    <Typography>{selectedDriver.employeeCode}</Typography>
+                    {selectedDriver && (
+                        <div>
+                            <TextField
+                                label="Driver name"
+                                defaultValue={selectedDriver.name}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            // variant="outlined"
+                            />
+                            <TextField
+                                label="Employee Code"
+                                defaultValue={selectedDriver.employeeCode}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            // variant="outlined"
+                            />
+                        </div>)
+                    }
                 </Grid>
             </Grid>
         </div>

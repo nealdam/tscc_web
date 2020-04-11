@@ -11,5 +11,6 @@ export const trashAreaHeadCells = [
 export const driverHeadCells = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
     { id: 'employeeCode', numeric: false, disablePadding: true, label: 'Employee Code' },
-
+    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone Number' },
+    { id: 'detail', numeric: false, disablePadding: true, label: 'Details' },
 ]
