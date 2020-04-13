@@ -9,6 +9,7 @@ import { isToday } from '../../utils/dateUtil';
 import DepartureBoardIcon from '@material-ui/icons/DepartureBoard';
 import DoneIcon from '@material-ui/icons/Done';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
+import JobStatusDetailDialog from '../../organisms/dialog/JobStatusDetailDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -33,6 +34,10 @@ function CollectJobStatus() {
     const classes = useStyles();
 
     const { enqueueSnackbar } = useSnackbar();
+
+    const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+
+    const [selectedCollectJob, setSelectedCollectJob] = useState();
 
     const [collectJobs, setCollectJobs] = useState([]);
 
@@ -85,6 +90,11 @@ function CollectJobStatus() {
             return <Button onClick={fetchCollectJob}>Fetch collect job</Button>
         }
         return <div></div>
+    }
+
+    const handleOpenCollectJobDetail = (collectJob) => {
+        setSelectedCollectJob(collectJob);
+        setIsDetailDialogOpen(true);
     }
 
     const PreViewTrashAreas = (props) => {
@@ -142,7 +152,7 @@ function CollectJobStatus() {
                             <CardHeader
                                 avatar={getStatus(collectJob.status.name)}
                                 action={
-                                    <IconButton>
+                                    <IconButton onClick={() => handleOpenCollectJobDetail(collectJob)}>
                                         <InfoIcon />
                                     </IconButton>
                                 }
@@ -157,6 +167,7 @@ function CollectJobStatus() {
                     </GridListTile>
                 ))}
             </GridList>
+            {isDetailDialogOpen && <JobStatusDetailDialog open={isDetailDialogOpen} setOpen={setIsDetailDialogOpen} collectJob={selectedCollectJob} />}
         </div>
     )
 }
