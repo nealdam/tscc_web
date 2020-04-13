@@ -1,6 +1,6 @@
-import React from 'react'
-import { Dialog, DialogTitle, DialogContent, Grid, TextField, makeStyles, List, Avatar, ListItemText, ListItem, ListItemAvatar, Divider, Typography } from '@material-ui/core'
-import DoneIcon from '@material-ui/icons/Done';
+import { Dialog, DialogContent, DialogTitle, Divider, Grid, List, ListItem, ListItemAvatar, ListItemText, makeStyles, TextField, Typography } from '@material-ui/core';
+import React from 'react';
+import { getCollectStatusAvatar } from '../../utils/statusUtil';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -33,9 +33,7 @@ function JobStatusDetailDialog(props) {
                             {collectJob.trashAreas.map((trashArea) => (
                                 <ListItem>
                                     <ListItemAvatar>
-                                        <Avatar>
-                                            <DoneIcon />
-                                        </Avatar>
+                                        {getCollectStatusAvatar(trashArea.status.name)}
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={`${trashArea.street}`}

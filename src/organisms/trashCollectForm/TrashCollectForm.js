@@ -1,4 +1,4 @@
-import { Grid, Table, TableBody, TableCell, TableRow, Typography, TextField } from '@material-ui/core';
+import { Grid, Table, TableBody, TableCell, TableRow, Typography, TextField, TableHead } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -10,8 +10,16 @@ function TrashCollectForm(props) {
         <div>
             <Grid container spacing={3}>
                 <Grid item xs>
+                    <Typography variant="h4">Selected Trash Area</Typography>
                     <Table>
-                        <Typography variant="h4">Selected Trash Area</Typography>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Street</TableCell>
+                                <TableCell>Size</TableCell>
+                                <TableCell>Type</TableCell>
+                                <TableCell>Width</TableCell>
+                            </TableRow>
+                        </TableHead>
                         <TableBody>
                             {selectedTrash.map((trash) => (
                                 <TableRow key={trash.id}>
@@ -30,6 +38,7 @@ function TrashCollectForm(props) {
                         <div>
                             <TextField
                                 label="Driver name"
+                                style={{ marginTop: 20 }}
                                 defaultValue={selectedDriver.name}
                                 InputProps={{
                                     readOnly: true,
@@ -38,6 +47,7 @@ function TrashCollectForm(props) {
                             />
                             <TextField
                                 label="Employee Code"
+                                style={{ marginTop: 20 }}
                                 defaultValue={selectedDriver.employeeCode}
                                 InputProps={{
                                     readOnly: true,
