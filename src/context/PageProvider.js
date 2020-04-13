@@ -35,17 +35,17 @@ class PageProvider extends Component {
         userData: new UserData(),
     };
 
-    componentDidMount() {
-        auth.onAuthStateChanged(userAuth => {
-            if (userAuth) {
-                userAuth.getIdToken().then(token => {
-                    console.log("Token setted");
-                    this.state.userData.setToken(token);
-                })
-                this.state.userData.setEmail(userAuth.email);
-            }
-        })
-    }
+    // componentDidMount() {
+    //     auth.onAuthStateChanged(userAuth => {
+    //         if (userAuth) {
+    //             userAuth.getIdToken().then(token => {
+    //                 console.log("Token setted");
+    //                 this.state.userData.setToken(token);
+    //             })
+    //             this.state.userData.setEmail(userAuth.email);
+    //         }
+    //     })
+    // }
 
 
     render() {

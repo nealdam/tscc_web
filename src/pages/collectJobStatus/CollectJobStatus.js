@@ -11,27 +11,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 import JobStatusDetailDialog from '../../organisms/dialog/JobStatusDetailDialog';
 
-const useStyles = makeStyles({
-    root: {
-        // minWidth: 275,
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
-
 function CollectJobStatus() {
 
     const userData = useContext(UserContext);
-    const classes = useStyles();
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -41,9 +23,9 @@ function CollectJobStatus() {
 
     const [collectJobs, setCollectJobs] = useState([]);
 
-    // useEffect(() => {
-    //     fetchCollectJob();
-    // }, [])
+    useEffect(() => {
+        fetchCollectJob();
+    }, [])
 
     const getCreateDate = (dateString) => {
         const d = new Date(dateString);
