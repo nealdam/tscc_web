@@ -8,8 +8,6 @@ export default function HomePage() {
 
     const userData = useContext(UserContext);
 
-    const [isTokenSetted, setIsTokenSetted] = useState(false);
-
     const history = useHistory();
 
     auth.onAuthStateChanged(userAuth => {
@@ -18,10 +16,9 @@ export default function HomePage() {
             userAuth.getIdToken().then(token => {
                 console.log("Token setted");
                 userData.setToken(token);
-                setIsTokenSetted(true);
+                history.push("/operator");
             })
             userData.setEmail(userAuth.email);
-            // history.push("/operator");
             // const history = useHistory();
         } else {
             console.log("obs User logged out");
@@ -35,9 +32,7 @@ export default function HomePage() {
 
     return (
         <div>
-            {isTokenSetted
-                ? <Redirect to={{ pathname: "/operator" }} />
-                : <Backdrop open={true}><CircularProgress color="inherit" /></Backdrop>}
+            <Backdrop open={true}><CircularProgress color="inherit" /></Backdrop>
         </div>
     )
 }

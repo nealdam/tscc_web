@@ -27,7 +27,7 @@ function JobStatusDetailDialog(props) {
         >
             <DialogTitle>Collect Job Detail</DialogTitle>
             <DialogContent dividers>
-                <Grid container spacing={2}>
+                <Grid container component="paper" spacing={2}>
                     <Grid item xs={8}>
                         <List>
                             {collectJob.trashAreas.map((trashArea) => (
@@ -43,7 +43,7 @@ function JobStatusDetailDialog(props) {
                             ))}
                         </List>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} container spacing={2}>
                         <Grid item xs={12}>
                             <Typography variant="h6">Collector</Typography>
                             <TextField
@@ -60,7 +60,7 @@ function JobStatusDetailDialog(props) {
                                 size="small"
                                 defaultValue={collectJob.driver.employeeCode}
                                 InputProps={{
-                                    readONly: true,
+                                    readOnly: true,
                                 }}
                             />
                             <TextField
@@ -69,13 +69,12 @@ function JobStatusDetailDialog(props) {
                                 size="small"
                                 defaultValue={collectJob.driver.phone}
                                 InputProps={{
-                                    readONly: true,
+                                    readOnly: true,
                                 }}
                             />
                         </Grid>
-                        <Divider />
                         <Grid item xs={12}>
-                            <Typography variant="h6" style={{ marginTop: 20 }}>Assigned by</Typography>
+                            <Typography variant="h6">Assigned by</Typography>
                             <TextField
                                 label="Operator name"
                                 size="small"
@@ -90,7 +89,7 @@ function JobStatusDetailDialog(props) {
                                 size="small"
                                 defaultValue={collectJob.operator.employeeCode}
                                 InputProps={{
-                                    readONly: true,
+                                    readOnly: true,
                                 }}
                             />
                             <TextField
@@ -99,7 +98,7 @@ function JobStatusDetailDialog(props) {
                                 size="small"
                                 defaultValue={collectJob.operator.phone}
                                 InputProps={{
-                                    readONly: true,
+                                    readOnly: true,
                                 }}
                             />
                         </Grid>
