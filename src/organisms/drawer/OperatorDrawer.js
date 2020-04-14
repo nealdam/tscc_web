@@ -53,10 +53,10 @@ export default function OperatorDrawer() {
                     <ListItemIcon><TrashCarIcon /></ListItemIcon>
                     <ListItemText primary="Driver" />
                 </ListItem>
-                <ListItem button selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)} component={RouterLink} to="/operator/notification">
+                {/* <ListItem button selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)} component={RouterLink} to="/operator/notification">
                     <ListItemIcon><NotificationIcon /></ListItemIcon>
                     <ListItemText primary="Notification" />
-                </ListItem>
+                </ListItem> */}
             </List>
         </Drawer>
     )

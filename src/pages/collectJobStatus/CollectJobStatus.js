@@ -10,6 +10,7 @@ import DepartureBoardIcon from '@material-ui/icons/DepartureBoard';
 import DoneIcon from '@material-ui/icons/Done';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 import JobStatusDetailDialog from '../../organisms/dialog/JobStatusDetailDialog';
+import { getCollectStatusAvatar } from '../../utils/statusUtil';
 
 function CollectJobStatus() {
 
@@ -51,22 +52,6 @@ function CollectJobStatus() {
             })
     }
 
-    const getStatus = (status) => {
-        if (status === 'PROCESSING') {
-            return (
-                <Avatar style={{ backgroundColor: '#ffa000' }}>
-                    <DepartureBoardIcon />
-                </Avatar>
-            )
-        }
-
-        return (
-            <Avatar style={{ backgroundColor: '#43a047' }}>
-                <DoneIcon />
-            </Avatar>
-        )
-    }
-
     const FetchButton = () => {
         if (collectJobs.length === 0) {
             return <Button onClick={fetchCollectJob}>Fetch collect job</Button>
@@ -96,7 +81,7 @@ function CollectJobStatus() {
             items.push(
                 <ListItem key={i}>
                     <ListItemAvatar>
-                        {getStatus(trashAreas[i].status.name)}
+                        {getCollectStatusAvatar(trashAreas[i].status.name)}
                     </ListItemAvatar>
                     <ListItemText primary={trashAreas[i].street} />
                 </ListItem>
@@ -132,7 +117,7 @@ function CollectJobStatus() {
                             style={{ height: "100%" }}
                         >
                             <CardHeader
-                                avatar={getStatus(collectJob.status.name)}
+                                avatar={getCollectStatusAvatar(collectJob.status.name)}
                                 action={
                                     <IconButton onClick={() => handleOpenCollectJobDetail(collectJob)}>
                                         <InfoIcon />

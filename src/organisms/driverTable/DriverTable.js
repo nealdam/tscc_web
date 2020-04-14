@@ -139,7 +139,7 @@ function DriverTable(props) {
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
                                         <TableCell align="left" padding="none">{row.phone}</TableCell>
-                                        <TableCell align="center">
+                                        {/* <TableCell align="center">
                                             <IconButton
                                                 color="default"
                                                 component="span"
@@ -147,7 +147,7 @@ function DriverTable(props) {
                                             >
                                                 <CreateIcon />
                                             </IconButton>
-                                        </TableCell>
+                                        </TableCell> */}
                                     </TableRow>
                                 );
                             })}
