@@ -1,15 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { getCollectJob } from '../../services/operatorService';
-import { UserContext } from '../../context/PageProvider';
-import { useSnackbar } from 'notistack';
-import { successNotify, errorNotify } from '../../constants/notistackOption';
-import { Card, CardContent, Typography, makeStyles, GridList, CardHeader, Avatar, IconButton, Divider, List, GridListTile, Button, ListItem, ListItemAvatar, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, Divider, GridList, GridListTile, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import { isToday } from '../../utils/dateUtil';
-import DepartureBoardIcon from '@material-ui/icons/DepartureBoard';
-import DoneIcon from '@material-ui/icons/Done';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
+import { useSnackbar } from 'notistack';
+import React, { useContext, useEffect, useState } from 'react';
+import { errorNotify, successNotify } from '../../constants/notistackOption';
+import { UserContext } from '../../context/PageProvider';
 import JobStatusDetailDialog from '../../organisms/dialog/JobStatusDetailDialog';
+import { getCollectJob } from '../../services/operatorService';
+import { isToday } from '../../utils/dateUtil';
 import { getCollectStatusAvatar } from '../../utils/statusUtil';
 
 function CollectJobStatus() {
@@ -90,11 +88,11 @@ function CollectJobStatus() {
 
         if (trashAreas.length > 3) {
             items.push(
-                <ListItem button>
+                <ListItem>
                     <ListItemIcon>
                         <MoreIcon />
                     </ListItemIcon>
-                    <ListItemText primary="more" />
+                    <ListItemText primary="click detail for more" />
                 </ListItem>
             )
         }

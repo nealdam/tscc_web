@@ -29,7 +29,7 @@ function JobStatusDetailDialog(props) {
             <DialogContent dividers>
                 <Grid container component="paper" spacing={2}>
                     <Grid item xs={8}>
-                        <List>
+                        <List style={{ height: 400 }}>
                             {collectJob.trashAreas.map((trashArea) => (
                                 <ListItem>
                                     <ListItemAvatar>
