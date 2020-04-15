@@ -1,7 +1,8 @@
 import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { errorNotify, successNotify } from '../../constants/notistackOption';
 import { collectTrashSteps } from '../../constants/steps';
 import { UserContext } from '../../context/PageProvider';
@@ -10,7 +11,6 @@ import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLin
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 import { getDrivers, getTrashAreas, sendDirection } from '../../services/operatorService';
-import { useHistory } from 'react-router-dom';
 
 function TrashCollect() {
     const { enqueueSnackbar } = useSnackbar();

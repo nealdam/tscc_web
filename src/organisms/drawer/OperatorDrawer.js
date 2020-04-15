@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { makeStyles, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import { DRAWER_WIDTH } from '../../constants/dimension';
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import TrashCarIcon from '@material-ui/icons/LocalShipping';
-import NotificationIcon from '@material-ui/icons/Notifications';
-import RouterLink from 'react-router-dom/Link';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { DRAWER_WIDTH } from '../../constants/dimension';
 
 
 

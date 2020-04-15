@@ -5,7 +5,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Avatar } from "@material-ui/core"
 
 export function getCollectStatusAvatar(status) {
-    console.log(status);
     if (status === 'PROCESSING') {
         return (
             <Avatar style={{ backgroundColor: '#ffa000' }}>

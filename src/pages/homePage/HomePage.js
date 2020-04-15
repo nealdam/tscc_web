@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { auth } from '../../firebase/firebase';
-import { useHistory, Redirect } from 'react-router-dom';
-import { PageContext, UserContext } from '../../context/PageProvider';
 import { Backdrop, CircularProgress } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { PageContext, UserContext } from '../../context/PageProvider';
+import { auth } from '../../firebase/firebase';
 
 export default function HomePage() {
 

@@ -60,7 +60,6 @@ export function getImageAPI(token, listImageNames) {
 
     listImageNames.map(imageName => {
         const request = axios.get(`${URL_GET_IMAGE}${imageName}`, getImageConfig(token));
-
         requests.push(request);
     });
 

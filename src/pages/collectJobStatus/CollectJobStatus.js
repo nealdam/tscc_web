@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import React, { useContext, useEffect, useState } from 'react';
 import { errorNotify, successNotify } from '../../constants/notistackOption';
 import { UserContext } from '../../context/PageProvider';
-import JobStatusDetailDialog from '../../organisms/dialog/JobStatusDetailDialog';
+import CollectJobDetailDialog from '../../organisms/dialog/CollectJobDetailDialog';
 import { getCollectJob } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
 import { getCollectStatusAvatar } from '../../utils/statusUtil';
@@ -64,8 +64,6 @@ function CollectJobStatus() {
 
     const PreViewTrashAreas = (props) => {
 
-        console.log(props);
-
         const trashAreas = props.trashAreas;
 
         const items = [];
@@ -88,7 +86,7 @@ function CollectJobStatus() {
 
         if (trashAreas.length > 3) {
             items.push(
-                <ListItem>
+                <ListItem key={4} >
                     <ListItemIcon>
                         <MoreIcon />
                     </ListItemIcon>
@@ -132,7 +130,7 @@ function CollectJobStatus() {
                     </GridListTile>
                 ))}
             </GridList>
-            {isDetailDialogOpen && <JobStatusDetailDialog open={isDetailDialogOpen} setOpen={setIsDetailDialogOpen} collectJob={selectedCollectJob} />}
+            {isDetailDialogOpen && <CollectJobDetailDialog open={isDetailDialogOpen} setOpen={setIsDetailDialogOpen} collectJob={selectedCollectJob} />}
         </div>
     )
 }

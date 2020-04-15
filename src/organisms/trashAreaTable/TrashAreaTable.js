@@ -1,11 +1,11 @@
-import { Button, Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, FormControl, InputLabel, Select, MenuItem, IconButton } from '@material-ui/core';
+import { Checkbox, FormControl, IconButton, InputLabel, makeStyles, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { trashAreaHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import InfoIcon from '@material-ui/icons/Info';
-import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
 import { isToday } from '../../utils/dateUtil';
+import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -36,9 +36,6 @@ function TrashAreaTable(props) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const { trashAreas, selected, setSelected } = props;
 
-    const [cities, setCities] = useState(['']);
-    const [selectedCity, setSelectedCity] = useState('');
-
     const [districts, setDistricts] = useState(['']);
     const [selectedDistrict, setSelectedDistrict] = useState('');
 
@@ -48,21 +45,8 @@ function TrashAreaTable(props) {
     const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
 
     useEffect(() => {
-        getCities();
         getDistricts();
     }, []);
-
-    const getCities = () => {
-        let newCities = [];
-
-        trashAreas.map((trashArea) => {
-            if (!(newCities.includes(trashArea.city))) {
-                newCities = newCities.concat(trashArea.city);
-            }
-        })
-        setCities(newCities);
-        setSelectedCity(newCities[0]);
-    }
 
     const getDistricts = () => {
         let newDistricts = [];
@@ -249,7 +233,8 @@ function TrashAreaTable(props) {
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                             />
                                         </TableCell>
-                                        <TableCell align="left" padding="none">{row.street}</TableCell>
+                                        <TableCell align="left" padding="none">{row.streetNumber}</TableCell>
+                                        <TableCell align="left">{row.street}</TableCell>
                                         <TableCell align="left">{row.size.name}</TableCell>
                                         <TableCell align="left">{row.width.name}</TableCell>
                                         <TableCell align="left">{row.type.name}</TableCell>

@@ -1,9 +1,8 @@
-import { AppBar, Badge, Button, IconButton, makeStyles, Toolbar, Typography } from "@material-ui/core";
-import NotificationIcon from "@material-ui/icons/Notifications";
+import { AppBar, Button, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import React, { useContext } from "react";
-import { auth } from "../../firebase/firebase";
 import { DRAWER_WIDTH } from "../../constants/dimension";
 import { UserContext } from "../../context/PageProvider";
+import { auth } from "../../firebase/firebase";
 
 const useStyles = makeStyles(theme => ({
   appBar: {

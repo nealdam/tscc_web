@@ -1,9 +1,8 @@
-import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, IconButton } from '@material-ui/core';
+import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { driverHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
-import CreateIcon from '@material-ui/icons/Create';
 
 const useStyles = makeStyles((theme) => ({
     table: {

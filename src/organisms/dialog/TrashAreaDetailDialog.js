@@ -1,12 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, Grid, TextField, DialogActions, Button, makeStyles, GridList, GridListTile, LinearProgress } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, GridList, GridListTile, LinearProgress, makeStyles, TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { isToday } from '../../utils/dateUtil';
-import { getImage, getImageAPI } from '../../services/operatorService';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/PageProvider';
 import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
-
-const axios = require('axios').default;
+import { getImageAPI } from '../../services/operatorService';
+import { isToday } from '../../utils/dateUtil';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -114,7 +112,7 @@ function TrashAreaDetailDialog(props) {
                                 InputProps={{
                                     readOnly: true,
                                 }}
-                                value={`${trashArea.street}, ${trashArea.district}, ${trashArea.city}`}
+                                value={`${trashArea.streetNumber} ${trashArea.street}, ${trashArea.district}, ${trashArea.city}`}
                             />
                             <TextField
                                 className={classes.textField}

@@ -1,4 +1,5 @@
 export const trashAreaHeadCells = [
+    { id: 'streetNumber', numeric: false, disablePadding: true, label: 'St.Number' },
     { id: 'street', numeric: false, disablePadding: true, label: 'Street' },
     { id: 'size', numeric: false, disablePadding: false, label: 'Size(kg)' },
     { id: 'width', numeric: false, disablePadding: false, label: 'Width(m)' },

@@ -1,10 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import GoogleMapReact from 'google-map-react';
-import { auth } from '../../firebase/firebase';
 import PlaceIcon from '@material-ui/icons/Place';
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import GoogleMapReact from 'google-map-react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 function TrashAreaMap(props) {
 
