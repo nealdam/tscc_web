@@ -168,7 +168,7 @@ function TrashCollect() {
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
                 {trashAreas.length > 0
-                    ? <TrashAreaTable trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
+                    ? <TrashAreaTable isCheckBox trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
                     : isLoading && <LinearProgress />
                 }
 

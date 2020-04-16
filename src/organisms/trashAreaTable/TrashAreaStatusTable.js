@@ -2,10 +2,11 @@ import { Checkbox, FormControl, IconButton, InputLabel, makeStyles, MenuItem, Se
 import InfoIcon from '@material-ui/icons/Info';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { trashAreaHeadCells } from '../../constants/headCells';
+import { trashAreaHeadCells, trashAreaStatusHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
 import { isToday } from '../../utils/dateUtil';
 import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
+import { getCollectStatusAvatar } from '../../utils/statusUtil';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -28,21 +29,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function TrashAreaTable(props) {
+function TrashAreaStatusTable(props) {
 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('numberOfRequest');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { trashAreas, selected, setSelected } = props;
+    const { trashAreas } = props;
 
     const [districts, setDistricts] = useState(['']);
     const [selectedDistrict, setSelectedDistrict] = useState('');
 
     const [displayTrashAreas, setDisplayTrashAreas] = useState([]);
-
-    const [trashAreaDetail, setTrashAreaDetail] = useState({});
-    const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
 
     useEffect(() => {
         getDistricts();
@@ -110,45 +108,9 @@ function TrashAreaTable(props) {
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = trashAreas.map((n) => n.id);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    }
-
-    const handleRowClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    const handleDetailClick = (trashArea) => {
-        setTrashAreaDetail(trashArea);
-        setIsOpenTrashAreaDetail(true);
-    }
-
-    const isSelected = (street) => selected.indexOf(street) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, trashAreas.length - page * rowsPerPage);
 
@@ -157,20 +119,6 @@ function TrashAreaTable(props) {
 
     return (
         <div>
-            {/* <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>City</InputLabel>
-                <Select
-                    value={selectedCity}
-                    label="City"
-                    onChange={handleCityChange}
-                >
-                    {cities.map((city) => (
-                        <MenuItem key={city} value={city}>
-                            {city}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl> */}
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel>District</InputLabel>
                 <Select
@@ -192,59 +140,32 @@ function TrashAreaTable(props) {
                 >
                     <EnhancedTableHead
                         classes={classes}
-                        numSelected={selected.length}
                         order={order}
                         orderBy={orderBy}
-                        onSelectAllClick={handleSelectAllClick}
                         onRequestSort={handleRequestSort}
                         rowCount={displayTrashAreas.length}
-                        headCells={trashAreaHeadCells}
+                        headCells={trashAreaStatusHeadCells}
+                        isCheckBoxAll={false}
                     />
                     <TableBody>
                         {stableSort(displayTrashAreas, getComparator(order, orderBy))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
-                                const isItemSelected = isSelected(row.id);
-                                const labelId = `enhanced-table-checkbox-${index}`;
-                                const d = new Date(row.createAt);
-                                let date = d.toLocaleString();
-
-                                if (isToday(d)) {
-                                    date = d.toLocaleTimeString();
-                                }
-
                                 return (
                                     <TableRow
                                         hover
                                         role="checkbox"
-                                        aria-checked={isItemSelected}
                                         tabIndex={-1}
                                         key={row.id}
-                                        selected={isItemSelected}
                                     >
-                                        <TableCell padding="checkbox">
-                                            <Checkbox
-                                                checked={isItemSelected}
-                                                onClick={(event) => handleRowClick(event, row.id)}
-                                                inputProps={{ 'aria-labelledby': labelId }}
-                                            />
-                                        </TableCell>
-                                        <TableCell align="left" padding="none">{row.streetNumber}</TableCell>
+                                        <TableCell align="left" padding="default">{row.streetNumber}</TableCell>
                                         <TableCell align="left">{row.street}</TableCell>
                                         <TableCell align="left">{row.size.name}</TableCell>
                                         <TableCell align="left">{row.width.name}</TableCell>
                                         <TableCell align="left">{row.type.name}</TableCell>
                                         <TableCell align="center">{row.numberOfRequest}</TableCell>
-
-                                        <TableCell align="left">{date}</TableCell>
                                         <TableCell align="center">
-                                            <IconButton
-                                                color="default"
-                                                component="span"
-                                                onClick={() => handleDetailClick(row)}
-                                            >
-                                                <InfoIcon />
-                                            </IconButton>
+                                            {getCollectStatusAvatar(row.status.name)}
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -264,28 +185,16 @@ function TrashAreaTable(props) {
                 page={page}
                 onChangePage={handleChangePage}
             />
-            {isOpenTrashAreaDetail &&
-                <TrashAreaDetailDialog
-                    open={isOpenTrashAreaDetail}
-                    setOpen={setIsOpenTrashAreaDetail}
-                    trashArea={trashAreaDetail}
-                />
-            }
-
         </div>
     )
 }
 
-TrashAreaTable.defaultProps = {
+TrashAreaStatusTable.defaultProps = {
     trashAreas: [],
-    selected: [],
-    setSelected: () => { },
 }
 
-TrashAreaTable.propTypes = {
+TrashAreaStatusTable.propTypes = {
     trashAreas: PropTypes.array.isRequired,
-    selected: PropTypes.array,
-    setSelected: PropTypes.func,
 }
 
-export default TrashAreaTable;
+export default TrashAreaStatusTable;

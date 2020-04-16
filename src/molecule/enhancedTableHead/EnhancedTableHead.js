@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from "@material-ui/core";
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells, isDisableCheckAll } = props;
+    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells, isDisableCheckAll, isCheckBoxAll = true } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -11,15 +11,17 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                        disabled={isDisableCheckAll}
-                    />
-                </TableCell>
+                {isCheckBoxAll &&
+                    <TableCell padding="checkbox">
+                        <Checkbox
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={rowCount > 0 && numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                            inputProps={{ 'aria-label': 'select all desserts' }}
+                            disabled={isDisableCheckAll}
+                        />
+                    </TableCell>
+                }
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -55,6 +57,7 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
     isDisableCheckAll: PropTypes.bool,
+    isCheckBoxAll: PropTypes.bool
 };
 
 export default EnhancedTableHead;

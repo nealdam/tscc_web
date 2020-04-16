@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, Divider, GridList, GridListTile, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, Divider, GridList, GridListTile, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography, Tooltip } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 import { useSnackbar } from 'notistack';
@@ -79,7 +79,7 @@ function CollectJobStatus() {
                     <ListItemAvatar>
                         {getCollectStatusAvatar(trashAreas[i].status.name)}
                     </ListItemAvatar>
-                    <ListItemText primary={trashAreas[i].street} />
+                    <ListItemText primary={`${trashAreas[i].streetNumber} ${trashAreas[i].street}`} />
                 </ListItem>
             )
         }
@@ -115,9 +115,11 @@ function CollectJobStatus() {
                             <CardHeader
                                 avatar={getCollectStatusAvatar(collectJob.status.name)}
                                 action={
-                                    <IconButton onClick={() => handleOpenCollectJobDetail(collectJob)}>
-                                        <InfoIcon />
-                                    </IconButton>
+                                    <Tooltip title="Detail">
+                                        <IconButton onClick={() => handleOpenCollectJobDetail(collectJob)}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                    </Tooltip>
                                 }
                                 title={collectJob.driver ? `Driver: ${collectJob.driver.name}` : "Driver Name"}
                                 subheader={collectJob.createAt && `Assign at: ${getCreateDate(collectJob.createAt)}`}
