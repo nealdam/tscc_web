@@ -1,4 +1,4 @@
-import { AppBar, Dialog, DialogContent, Grid, IconButton, makeStyles, Slide, Toolbar, Typography, Tooltip, Popover } from '@material-ui/core';
+import { AppBar, Dialog, DialogContent, Grid, IconButton, makeStyles, Slide, Toolbar, Typography, Tooltip, Popover, TextField } from '@material-ui/core';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React, { useState } from 'react';
 import TrashAreaStatusTable from '../trashAreaTable/TrashAreaStatusTable';
@@ -103,7 +103,7 @@ function JobStatusDetailDialog(props) {
                         classes={{
                             paper: classes.paper,
                         }}
-                        open={open}
+                        open={isOperatorPopoverOpen}
                         anchorEl={operatorAnchorEl}
                         anchorOrigin={{
                             vertical: 'bottom',
@@ -111,12 +111,39 @@ function JobStatusDetailDialog(props) {
                         }}
                         transformOrigin={{
                             vertical: 'top',
-                            horizontal: 'left',
+                            horizontal: 'right',
                         }}
                         onClose={handleOperatorPopoverClose}
                         disableRestoreFocus
                     >
-                        <Typography>I use operator.</Typography>
+                        <Typography variant="h6">Assigned by</Typography>
+                        <TextField
+                            className={classes.textField}
+                            label="Operator name"
+                            size="small"
+                            defaultValue={collectJob.operator.name}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label="Employee code"
+                            size="small"
+                            defaultValue={collectJob.operator.employeeCode}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label="Phone"
+                            size="small"
+                            defaultValue={collectJob.operator.phone}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
                     </Popover>
                     <Popover
                         id="driver-mouse-over-popover"
@@ -124,7 +151,7 @@ function JobStatusDetailDialog(props) {
                         classes={{
                             paper: classes.paper,
                         }}
-                        open={open}
+                        open={isDriverPopoverOpen}
                         anchorEl={driverAnchorEl}
                         anchorOrigin={{
                             vertical: 'bottom',
@@ -132,12 +159,39 @@ function JobStatusDetailDialog(props) {
                         }}
                         transformOrigin={{
                             vertical: 'top',
-                            horizontal: 'left',
+                            horizontal: 'right',
                         }}
                         onClose={handleDriverPopoverClose}
                         disableRestoreFocus
                     >
-                        <Typography>I use driver.</Typography>
+                        <Typography variant="h6">Collector</Typography>
+                        <TextField
+                            className={classes.textField}
+                            label="Driver name"
+                            size="small"
+                            defaultValue={collectJob.driver.name}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label="Employee code"
+                            size="small"
+                            defaultValue={collectJob.driver.employeeCode}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label="Phone"
+                            size="small"
+                            defaultValue={collectJob.driver.phone}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
                     </Popover>
                 </Toolbar>
             </AppBar>
