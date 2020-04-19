@@ -117,7 +117,6 @@ function DriverTable(props) {
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.id)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -128,6 +127,7 @@ function DriverTable(props) {
                                         {isForSelect &&
                                             <TableCell padding="checkbox">
                                                 <Checkbox
+                                                    onClick={(event) => handleClick(event, row.id)}
                                                     checked={isItemSelected}
                                                     inputProps={{ 'aria-labelledby': labelId }}
                                                 />

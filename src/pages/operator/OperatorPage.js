@@ -102,7 +102,7 @@ export default function OperatorPage() {
                         <CollectJobStatus collectJobs={collectJobs} />
                     </Route>
                     <Route path={`${path}/collect`} >
-                        <TrashCollect trashAreas={trashAreas} drivers={drivers} />
+                        <TrashCollect trashAreas={trashAreas} drivers={drivers} fetchData={fetchData} />
                     </Route>
                     <Route exact path={`${path}/driver`} >
                         <DriverTable drivers={drivers} selected={''} setSelected={''} isForSelect={false} />

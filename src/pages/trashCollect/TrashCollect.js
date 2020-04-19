@@ -15,7 +15,7 @@ import { sendDirection } from '../../services/operatorService';
 function TrashCollect(props) {
     const userData = useContext(UserContext)
 
-    const { trashAreas, drivers } = props;
+    const { trashAreas, drivers, fetchData } = props;
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -48,6 +48,7 @@ function TrashCollect(props) {
             })
             .finally(() => {
                 history.push("/operator");
+                fetchData();
             })
     }
 
