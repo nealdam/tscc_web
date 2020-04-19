@@ -90,6 +90,7 @@ function TrashAreaTable(props) {
     const handleDistrictChange = (event) => {
         setSelectedDistrict(event.target.value);
         setNewDistrict(event.target.value);
+        setPage(0);
     }
 
     const setNewDistrict = (district) => {
@@ -259,7 +260,7 @@ function TrashAreaTable(props) {
             </TableContainer>
             <TablePagination
                 component="div"
-                count={trashAreas.length}
+                count={displayTrashAreas.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
