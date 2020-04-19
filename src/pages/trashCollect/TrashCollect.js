@@ -1,7 +1,7 @@
-import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@material-ui/core';
+import { Box, Button, ButtonGroup, Typography } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { errorNotify, successNotify } from '../../constants/notistackOption';
 import { collectTrashSteps } from '../../constants/steps';
@@ -10,78 +10,28 @@ import DriverTable from '../../organisms/driverTable/DriverTable';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
-import { getDrivers, getTrashAreas, sendDirection } from '../../services/operatorService';
+import { sendDirection } from '../../services/operatorService';
 
-function TrashCollect() {
-    const { enqueueSnackbar } = useSnackbar();
-    const [isLoading, setIsLoading] = useState(false);
-
+function TrashCollect(props) {
     const userData = useContext(UserContext)
+
+    const { trashAreas, drivers } = props;
+
+    const { enqueueSnackbar } = useSnackbar();
+
     const [activeStep, setActiveStep] = useState(0);
     const steps = collectTrashSteps;
 
-    const [trashAreas, setTrashAreas] = useState([]);
-    const [selectedTrashId, setSelectedTrashId] = useState([]);
-
-    const [drivers, setDrivers] = useState([]);
+    const [selectedTrashIds, setSelectedTrashIds] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
 
     const history = useHistory();
 
-    useEffect(() => {
-        fetchTrashAreas();
-        fetchDrivers();
-    }, [])
-
-    const fetchTrashAreas = () => {
-        setIsLoading(true);
-        getTrashAreas(userData.userToken)
-            .then(response => {
-                if (response.data.success) {
-                    enqueueSnackbar("Fetch Trash Area data success", successNotify);
-                    setTrashAreas(response.data.content);
-                } else {
-                    enqueueSnackbar(response.data.message, errorNotify);
-                }
-            })
-            .catch(error => {
-                console.log("Error during fetch Trash Area");
-                console.log(error);
-                enqueueSnackbar("Error during fetch Trash Area", errorNotify);
-            })
-            .finally(
-                setIsLoading(false)
-            );
-    }
-
-    const fetchDrivers = () => {
-        getDrivers(userData.userToken)
-            .then(response => {
-                if (response.data.success) {
-                    enqueueSnackbar("Fetch Drivers data success", successNotify);
-                    setDrivers(response.data.content);
-                } else {
-                    enqueueSnackbar(response.data.message, errorNotify);
-                }
-            })
-            .catch(error => {
-                console.log("Error during fetch Drivers");
-                console.log(error);
-                enqueueSnackbar("Error during fetch Drivers", errorNotify);
-            })
-    }
-
-    const handleFetchTrashAreas = () => {
-        fetchTrashAreas();
-    }
-
     const handleSendCollectTrash = () => {
         const driverId = selectedDriverId.shift();
-        const tempTrashAreaId = selectedTrashId;
+        const tempTrashAreaId = selectedTrashIds;
 
         const body = { driverId, tempTrashAreaId };
-
-
 
         sendDirection(userData.userToken, body)
             .then(response => {
@@ -112,7 +62,7 @@ function TrashCollect() {
     const getSelectedTrashList = () => {
         let selectedTrash = [];
 
-        selectedTrashId.forEach((id, index) => {
+        selectedTrashIds.forEach((id, index) => {
 
             let value = trashAreas.find((trash) => {
                 return trash.id === id;
@@ -136,7 +86,7 @@ function TrashCollect() {
 
     const isNext = () => {
         if (activeStep === 0) {
-            if (selectedTrashId.length === 0) {
+            if (selectedTrashIds.length === 0) {
                 return true;
             } else {
                 return false;
@@ -156,6 +106,7 @@ function TrashCollect() {
 
     return (
         <div>
+            {console.log(trashAreas)}
             <HorizontalLinearStepper
                 steps={steps}
                 activeStep={activeStep}
@@ -168,8 +119,8 @@ function TrashCollect() {
             </ButtonGroup>
             <TabPanel value={activeStep} index={0}>
                 {trashAreas.length > 0
-                    ? <TrashAreaTable isCheckBox trashAreas={trashAreas} selected={selectedTrashId} setSelected={setSelectedTrashId} />
-                    : isLoading && <LinearProgress />
+                    ? <TrashAreaTable isCheckBox trashAreas={trashAreas} selected={selectedTrashIds} setSelected={setSelectedTrashIds} />
+                    : <div>Don't have any trash to show</div>
                 }
 
             </TabPanel>

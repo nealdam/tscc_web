@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from "@material-ui/core";
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells, isDisableCheckAll, isCheckBoxAll = true } = props;
+    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells, isDisableCheckAll = false, isCheckBoxAll = true } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };

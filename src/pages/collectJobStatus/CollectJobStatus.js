@@ -1,30 +1,17 @@
-import { Button, Card, CardContent, CardHeader, Divider, GridList, GridListTile, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Typography, Tooltip } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Divider, GridList, GridListTile, IconButton, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
-import { useSnackbar } from 'notistack';
-import React, { useContext, useEffect, useState } from 'react';
-import { errorNotify, successNotify } from '../../constants/notistackOption';
-import { UserContext } from '../../context/PageProvider';
+import React, { useState } from 'react';
 import CollectJobDetailDialog from '../../organisms/dialog/CollectJobDetailDialog';
-import { getCollectJob } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
 import { getCollectStatusAvatar } from '../../utils/statusUtil';
 
-function CollectJobStatus() {
+function CollectJobStatus(props) {
 
-    const userData = useContext(UserContext);
-
-    const { enqueueSnackbar } = useSnackbar();
+    const { collectJobs } = props;
 
     const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
-
     const [selectedCollectJob, setSelectedCollectJob] = useState();
-
-    const [collectJobs, setCollectJobs] = useState([]);
-
-    useEffect(() => {
-        fetchCollectJob();
-    }, [])
 
     const getCreateDate = (dateString) => {
         const d = new Date(dateString);
@@ -35,26 +22,6 @@ function CollectJobStatus() {
         }
 
         return date;
-    }
-
-    const fetchCollectJob = () => {
-        getCollectJob(userData.userToken)
-            .then(response => {
-                setCollectJobs(response.data);
-                enqueueSnackbar("Fetch collect job success", successNotify);
-            })
-            .catch(error => {
-                console.log("Error during fetch collect job");
-                console.log(error);
-                enqueueSnackbar("Error during fetch collect job", errorNotify);
-            })
-    }
-
-    const FetchButton = () => {
-        if (collectJobs.length === 0) {
-            return <Button onClick={fetchCollectJob}>Fetch collect job</Button>
-        }
-        return <div></div>
     }
 
     const handleOpenCollectJobDetail = (collectJob) => {
@@ -104,7 +71,6 @@ function CollectJobStatus() {
 
     return (
         <div>
-            <FetchButton />
             <GridList cellHeight={340} cols={3} spacing={10}>
                 {collectJobs.map((collectJob) => (
                     <GridListTile key={collectJob.id} cols={1}>

@@ -30,7 +30,7 @@ function DriverTable(props) {
     // const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { drivers, selected, setSelected } = props;
+    const { drivers, selected, setSelected, isForSelect = true } = props;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, drivers.length - page * rowsPerPage);
 
@@ -77,10 +77,6 @@ function DriverTable(props) {
         // setSelected([]);
     }
 
-    const handleDetailClick = (driver) => {
-
-    }
-
     const handleClick = (event, name) => {
 
         let newSelected = [name]
@@ -109,6 +105,7 @@ function DriverTable(props) {
                         rowCount={drivers.length}
                         headCells={driverHeadCells}
                         isDisableCheckAll={true}
+                        isCheckBoxAll={isForSelect}
                     />
                     <TableBody>
                         {stableSort(drivers, getComparator(order, orderBy))
@@ -127,12 +124,15 @@ function DriverTable(props) {
                                         key={row.id}
                                         selected={isItemSelected}
                                     >
-                                        <TableCell padding="checkbox">
-                                            <Checkbox
-                                                checked={isItemSelected}
-                                                inputProps={{ 'aria-labelledby': labelId }}
-                                            />
-                                        </TableCell>
+
+                                        {isForSelect &&
+                                            <TableCell padding="checkbox">
+                                                <Checkbox
+                                                    checked={isItemSelected}
+                                                    inputProps={{ 'aria-labelledby': labelId }}
+                                                />
+                                            </TableCell>
+                                        }
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
                                             {row.name}
                                         </TableCell>
