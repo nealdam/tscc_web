@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Typography } from '@material-ui/core';
+import { Box, Button, ButtonGroup, Typography, Grid, makeStyles } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
@@ -11,11 +11,20 @@ import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLin
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 import { sendDirection } from '../../services/operatorService';
+import RefreshIcon from '@material-ui/icons/Refresh';
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        margin: theme.spacing(1)
+    }
+}))
 
 function TrashCollect(props) {
+    const classes = useStyles();
+
     const userData = useContext(UserContext)
 
-    const { trashAreas, drivers, fetchData } = props;
+    const { trashAreas, drivers, fetchData, fetchTrashAreas } = props;
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -112,12 +121,23 @@ function TrashCollect(props) {
                 steps={steps}
                 activeStep={activeStep}
             />
-            <ButtonGroup color="primary" aria-label="outlined primary button group">
-                <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
-                <Button disabled={isNext()} onClick={handleNextStep}>Next</Button>
-                {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
-                }
-            </ButtonGroup>
+            <Grid container justify="space-between" alignItems="center">
+                <ButtonGroup color="primary" aria-label="outlined primary button group">
+                    <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
+                    <Button disabled={isNext()} onClick={handleNextStep}>Next</Button>
+                    {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
+                    }
+                </ButtonGroup>
+                <Button
+                    variant="contained"
+                    color="inherit"
+                    className={classes.button}
+                    startIcon={<RefreshIcon />}
+                    onClick={() => { fetchTrashAreas() }}
+                >
+                    Refresh
+                </Button>
+            </Grid>
             <TabPanel value={activeStep} index={0}>
                 {trashAreas.length > 0
                     ? <TrashAreaTable isCheckBox trashAreas={trashAreas} selected={selectedTrashIds} setSelected={setSelectedTrashIds} />

@@ -5,11 +5,12 @@ import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
 import TrashCollect from '../trashCollect/TrashCollect'
 import CollectJobStatus from '../collectJobStatus/CollectJobStatus'
-import { getCollectJob, getTrashAreas, getDrivers } from '../../services/operatorService'
+import { getCollectJobByDate, getTrashAreas, getDrivers } from '../../services/operatorService'
 import { UserContext } from '../../context/PageProvider'
 import { useSnackbar } from 'notistack'
 import { successNotify, errorNotify } from '../../constants/notistackOption'
 import DriverTable from '../../organisms/driverTable/DriverTable'
+import DriverDetail from '../driverDetail/DriverDetail'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -30,6 +31,7 @@ export default function OperatorPage() {
     const userData = useContext(UserContext);
 
     const [collectJobs, setCollectJobs] = useState([]);
+    const [collectJobsDate, setCollectJobsDate] = useState(new Date());
     const [trashAreas, setTrashAreas] = useState([]);
     const [drivers, setDrivers] = useState([]);
 
@@ -44,9 +46,12 @@ export default function OperatorPage() {
     }
 
     const fetchCollectJob = () => {
-        getCollectJob(userData.userToken)
+
+        console.log(collectJobsDate.toISOString());
+
+        getCollectJobByDate(userData.userToken, collectJobsDate)
             .then(response => {
-                setCollectJobs(response.data);
+                setCollectJobs(response.data.content);
                 enqueueSnackbar("Fetch collect job success", successNotify);
             })
             .catch(error => {
@@ -99,13 +104,13 @@ export default function OperatorPage() {
                 <div className={classes.toolbar} />
                 <Switch>
                     <Route exact path={path} >
-                        <CollectJobStatus collectJobs={collectJobs} />
+                        <CollectJobStatus collectJobs={collectJobs} selectedDate={collectJobsDate} setSelectedDate={setCollectJobsDate} refreshData={fetchCollectJob} />
                     </Route>
                     <Route path={`${path}/collect`} >
-                        <TrashCollect trashAreas={trashAreas} drivers={drivers} fetchData={fetchData} />
+                        <TrashCollect trashAreas={trashAreas} drivers={drivers} fetchData={fetchData} fetchTrashAreas={fetchTrashAreas} />
                     </Route>
                     <Route exact path={`${path}/driver`} >
-                        <DriverTable drivers={drivers} selected={''} setSelected={''} isForSelect={false} />
+                        <DriverDetail drivers={drivers} refreshData={fetchDrivers} />
                     </Route>
                 </Switch>
             </main>

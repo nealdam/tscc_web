@@ -1,4 +1,4 @@
-import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH, URL_GET_COLLECT_JOB } from '../constants/serverUrl';
+import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH, URL_GET_COLLECT_JOB, URL_GET_COLLECT_JOB_BY_DATE } from '../constants/serverUrl';
 
 const axios = require('axios').default;
 
@@ -66,6 +66,20 @@ export function getImageAPI(token, listImageNames) {
     return axios.all(requests);
 }
 
-export function getCollectJob(token) {
-    return axios.get(URL_GET_COLLECT_JOB, getConfig(token));
+export function getCollectJobByDate(token, date) {
+
+    var byDate = new Date(date.getTime());
+
+    byDate.setHours(+7);
+    byDate.setMinutes(0);
+    byDate.setSeconds(1);
+    byDate.setMilliseconds(0);
+
+    console.log(byDate.toLocaleString());
+
+    let url = `${URL_GET_COLLECT_JOB_BY_DATE}/${byDate.toISOString()}`;
+
+    console.log(url);
+
+    return axios.get(url, getConfig(token));
 }
