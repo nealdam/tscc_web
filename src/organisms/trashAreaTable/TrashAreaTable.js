@@ -46,7 +46,7 @@ function TrashAreaTable(props) {
 
     useEffect(() => {
         getDistricts();
-    }, []);
+    }, [trashAreas]);
 
     const getDistricts = () => {
         let newDistricts = [];

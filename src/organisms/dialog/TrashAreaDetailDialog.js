@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/PageProvider';
 import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
-import { getImageAPI } from '../../services/operatorService';
+import { getImageAPI, cancelTrashArea } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,21 @@ function TrashAreaDetailDialog(props) {
     useEffect(() => {
         fetchImages();
     }, [])
+
+    const handleCancelTrashArea = (id) => {
+        console.log("Id: " + id);
+        cancelTrashArea(userData.userToken, id)
+            .then(response => {
+                console.log(response);
+                if (response.data.success) {
+
+                }
+            })
+            .catch(error => {
+                console.log("Error during cancel trash are");
+                console.log(error);
+            });
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -181,7 +196,11 @@ function TrashAreaDetailDialog(props) {
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="secondary">
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleCancelTrashArea(trashArea.id)}
+                >
                     Cancel Trash Area
                 </Button>
                 <Button variant="contained" color="default" onClick={handleClose}>

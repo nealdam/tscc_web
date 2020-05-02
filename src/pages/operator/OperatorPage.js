@@ -5,12 +5,14 @@ import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
 import TrashCollect from '../trashCollect/TrashCollect'
 import CollectJobStatus from '../collectJobStatus/CollectJobStatus'
-import { getCollectJobByDate, getTrashAreas, getDrivers } from '../../services/operatorService'
+import { getCollectJobByDate, getTrashAreas, getDrivers, getGenerateStatus, generateTrashAreas } from '../../services/operatorService'
 import { UserContext } from '../../context/PageProvider'
 import { useSnackbar } from 'notistack'
-import { successNotify, errorNotify } from '../../constants/notistackOption'
+import { successNotify, errorNotify, infoNotify } from '../../constants/notistackOption'
 import DriverTable from '../../organisms/driverTable/DriverTable'
 import DriverDetail from '../driverDetail/DriverDetail'
+import { getDayTimeText } from '../../utils/dateUtil'
+import { isToday } from 'date-fns'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -33,6 +35,8 @@ export default function OperatorPage() {
     const [collectJobs, setCollectJobs] = useState([]);
     const [collectJobsDate, setCollectJobsDate] = useState(new Date());
     const [trashAreas, setTrashAreas] = useState([]);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [lastGenerate, setLastGenerate] = useState("Not yet");
     const [drivers, setDrivers] = useState([]);
 
     useEffect(() => {
@@ -42,14 +46,19 @@ export default function OperatorPage() {
     const fetchData = () => {
         fetchCollectJob();
         fetchTrashAreas();
+        fetchGenerateStatus();
         fetchDrivers();
     }
 
-    const fetchCollectJob = () => {
+    const fetchCollectJob = (date) => {
 
-        console.log(collectJobsDate.toISOString());
+        let chooseDate = collectJobsDate;
 
-        getCollectJobByDate(userData.userToken, collectJobsDate)
+        if (date) {
+            chooseDate = date;
+        }
+
+        getCollectJobByDate(userData.userToken, chooseDate)
             .then(response => {
                 setCollectJobs(response.data.content);
                 enqueueSnackbar("Fetch collect job success", successNotify);
@@ -78,6 +87,38 @@ export default function OperatorPage() {
             });
     }
 
+    const generateTrashArea = () => {
+        generateTrashAreas(userData.userToken)
+            .then(response => {
+                enqueueSnackbar("Start generating Trash Areas", infoNotify);
+                fetchGenerateStatus();
+            })
+            .catch(error => {
+                console.log("Error during generate Trash Areas");
+                console.log(error);
+            })
+    }
+
+    const fetchGenerateStatus = () => {
+        getGenerateStatus(userData.userToken)
+            .then(response => {
+
+                const date = new Date(response.data.lastGenerate);
+                let dateString = date.toLocaleString();
+
+                if (isToday(date)) {
+                    dateString = date.toLocaleTimeString();
+                }
+
+                setIsGenerating(response.data.generating);
+                setLastGenerate(dateString);
+            })
+            .catch(error => {
+                console.log("Error during fetch generate status");
+                console.log(error);
+            })
+    }
+
     const fetchDrivers = () => {
         getDrivers(userData.userToken)
             .then(response => {
@@ -95,6 +136,11 @@ export default function OperatorPage() {
             })
     }
 
+    const handleJobStatusDateChange = (date) => {
+        setCollectJobsDate(date);
+        fetchCollectJob(date);
+    }
+
 
     return (
         <React.Fragment>
@@ -104,10 +150,23 @@ export default function OperatorPage() {
                 <div className={classes.toolbar} />
                 <Switch>
                     <Route exact path={path} >
-                        <CollectJobStatus collectJobs={collectJobs} selectedDate={collectJobsDate} setSelectedDate={setCollectJobsDate} refreshData={fetchCollectJob} />
+                        <CollectJobStatus
+                            collectJobs={collectJobs}
+                            selectedDate={collectJobsDate}
+                            setSelectedDate={handleJobStatusDateChange}
+                            refreshData={fetchCollectJob}
+                        />
                     </Route>
                     <Route path={`${path}/collect`} >
-                        <TrashCollect trashAreas={trashAreas} drivers={drivers} fetchData={fetchData} fetchTrashAreas={fetchTrashAreas} />
+                        <TrashCollect
+                            trashAreas={trashAreas}
+                            drivers={drivers}
+                            fetchData={fetchData}
+                            fetchTrashAreas={fetchTrashAreas}
+                            isGenerating={isGenerating}
+                            lastGenerate={lastGenerate}
+                            generateTrashArea={generateTrashArea}
+                        />
                     </Route>
                     <Route exact path={`${path}/driver`} >
                         <DriverDetail drivers={drivers} refreshData={fetchDrivers} />

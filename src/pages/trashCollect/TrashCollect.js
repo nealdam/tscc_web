@@ -24,7 +24,15 @@ function TrashCollect(props) {
 
     const userData = useContext(UserContext)
 
-    const { trashAreas, drivers, fetchData, fetchTrashAreas } = props;
+    const {
+        trashAreas,
+        drivers,
+        fetchData,
+        fetchTrashAreas,
+        isGenerating,
+        lastGenerate,
+        generateTrashArea
+    } = props;
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -116,7 +124,6 @@ function TrashCollect(props) {
 
     return (
         <div>
-            {console.log(trashAreas)}
             <HorizontalLinearStepper
                 steps={steps}
                 activeStep={activeStep}
@@ -128,6 +135,30 @@ function TrashCollect(props) {
                     {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
                     }
                 </ButtonGroup>
+                <Typography>
+                    Last generate: {lastGenerate}
+                </Typography>
+
+                {isGenerating
+                    ? <Button
+                        variant="contained"
+                        color="inherit"
+                        className={classes.button}
+                        startIcon={<RefreshIcon />}
+                        disabled
+                    >
+                        Generating
+                    </Button>
+                    : <Button
+                        variant="contained"
+                        color="inherit"
+                        className={classes.button}
+                        startIcon={<RefreshIcon />}
+                        onClick={() => generateTrashArea()}
+                    >
+                        Generate Trash Area
+                    </Button>
+                }
                 <Button
                     variant="contained"
                     color="inherit"
