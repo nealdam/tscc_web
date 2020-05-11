@@ -141,24 +141,24 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Size"
+                                label="Size (kg)"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
                                     readOnly: true,
                                 }}
-                                value={trashArea.size.name}
+                                value={trashArea.size}
                             />
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Width"
+                                label="Width (&#13221;)"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
                                     readOnly: true,
                                 }}
-                                value={trashArea.width.name}
+                                value={trashArea.width}
                             />
                             <TextField
                                 className={classes.textField}

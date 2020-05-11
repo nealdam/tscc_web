@@ -1,8 +1,8 @@
 export const trashAreaHeadCells = [
     { id: 'streetNumber', numeric: false, disablePadding: true, label: 'St.Number' },
-    { id: 'street', numeric: false, disablePadding: true, label: 'Street' },
-    { id: 'size', numeric: false, disablePadding: false, label: 'Size(kg)' },
-    { id: 'width', numeric: false, disablePadding: false, label: 'Width(m)' },
+    { id: 'street', numeric: false, disablePadding: false, label: 'Street' },
+    { id: 'size', numeric: false, disablePadding: false, label: 'Size' },
+    { id: 'width', numeric: false, disablePadding: false, label: 'Width' },
     { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
     { id: 'numberOfRequest', numeric: false, disablePadding: false, label: 'Request number' },
     { id: 'createAt', numeric: false, disablePadding: false, label: 'Last update' },
@@ -11,9 +11,9 @@ export const trashAreaHeadCells = [
 
 export const trashAreaStatusHeadCells = [
     { id: 'streetNumber', numeric: false, disablePadding: false, label: 'St.Number' },
-    { id: 'street', numeric: false, disablePadding: true, label: 'Street' },
-    { id: 'size', numeric: false, disablePadding: false, label: 'Size(kg)' },
-    { id: 'width', numeric: false, disablePadding: false, label: 'Width(m)' },
+    { id: 'street', numeric: false, disablePadding: false, label: 'Street' },
+    { id: 'size', numeric: false, disablePadding: false, label: 'Size' },
+    { id: 'width', numeric: false, disablePadding: false, label: 'Width' },
     { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
     { id: 'numberOfRequest', numeric: false, disablePadding: false, label: 'Request number' },
     { id: 'status', numeric: false, disablePadding: false, label: 'Status' },

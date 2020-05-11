@@ -232,8 +232,8 @@ function TrashAreaTable(props) {
                                         </TableCell>
                                         <TableCell align="left" padding="none">{row.streetNumber}</TableCell>
                                         <TableCell align="left">{row.street}</TableCell>
-                                        <TableCell align="left">{row.size.name}</TableCell>
-                                        <TableCell align="left">{row.width.name}</TableCell>
+                                        <TableCell align="left">{row.size}</TableCell>
+                                        <TableCell align="left">{row.width}</TableCell>
                                         <TableCell align="left">{row.type.name}</TableCell>
                                         <TableCell align="center">{row.numberOfRequest}</TableCell>
 

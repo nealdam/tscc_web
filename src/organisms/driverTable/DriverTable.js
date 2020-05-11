@@ -1,8 +1,9 @@
-import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from '@material-ui/core';
+import { Checkbox, makeStyles, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Chip } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { driverHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
+import { isOnShift } from '../../utils/shiftUtil';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -142,7 +143,20 @@ function DriverTable(props) {
                                         <TableCell align="left" padding="none">{row.phone}</TableCell>
                                         <TableCell align="left" padding="none">{row.email}</TableCell>
                                         <TableCell align="left" padding="none"></TableCell>
-                                        <TableCell align="left" padding="none">{row.shift}</TableCell>
+                                        <TableCell align="left" padding="none">
+                                            {isOnShift(row.shift)
+                                                ? <Chip
+                                                    size="small"
+                                                    label="On Shift"
+                                                    color="primary"
+                                                />
+                                                : <Chip
+                                                    size="small"
+                                                    label="Out Shift"
+                                                    color="secondary"
+                                                />
+                                            }
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
