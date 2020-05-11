@@ -25,4 +25,5 @@ export const driverHeadCells = [
     { id: 'phone', numeric: false, disablePadding: true, label: 'Phone Number' },
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
     { id: 'status', numeric: false, disablePadding: true, label: 'Status' },
+    { id: 'shift', numeric: false, disablePadding: true, label: 'Shift' },
 ]

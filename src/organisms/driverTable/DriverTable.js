@@ -88,6 +88,8 @@ function DriverTable(props) {
         setPage(newPage);
     };
 
+
+
     return (
         <div>
             <TableContainer>
@@ -139,15 +141,8 @@ function DriverTable(props) {
                                         <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
                                         <TableCell align="left" padding="none">{row.phone}</TableCell>
                                         <TableCell align="left" padding="none">{row.email}</TableCell>
-                                        {/* <TableCell align="center">
-                                            <IconButton
-                                                color="default"
-                                                component="span"
-                                                onClick={() => handleDetailClick(row)}
-                                            >
-                                                <CreateIcon />
-                                            </IconButton>
-                                        </TableCell> */}
+                                        <TableCell align="left" padding="none"></TableCell>
+                                        <TableCell align="left" padding="none">{row.shift}</TableCell>
                                     </TableRow>
                                 );
                             })}

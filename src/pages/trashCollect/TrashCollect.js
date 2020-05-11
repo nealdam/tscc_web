@@ -10,7 +10,7 @@ import DriverTable from '../../organisms/driverTable/DriverTable';
 import HorizontalLinearStepper from '../../organisms/linearStepper/HorizontalLinearStepper';
 import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
-import { sendDirection } from '../../services/operatorService';
+import { sendDirection, cancelTrashArea } from '../../services/operatorService';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +29,7 @@ function TrashCollect(props) {
         drivers,
         fetchData,
         fetchTrashAreas,
+        fetchGenerateStatus,
         isGenerating,
         lastGenerate,
         generateTrashArea
@@ -42,7 +43,15 @@ function TrashCollect(props) {
     const [selectedTrashIds, setSelectedTrashIds] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
 
+    const [isTrashAreaDetailDialogOpen, setIsTrashAreaDetailDialogOpen] = useState(false);
+    const [trashAreaDetail, setTrashAreaDetail] = useState();
+
     const history = useHistory();
+
+    const handleRefresh = () => {
+        fetchTrashAreas();
+        fetchGenerateStatus();
+    }
 
     const handleSendCollectTrash = () => {
         const driverId = selectedDriverId.shift();
@@ -90,6 +99,19 @@ function TrashCollect(props) {
         })
 
         return selectedTrash;
+    }
+
+    const handleCancelTrashArea = (id) => {
+        cancelTrashArea(userData.userToken, id)
+            .then(response => {
+                if (response.data.success) {
+                    enqueueSnackbar("Cancel Trash Area success", successNotify);
+                } else {
+                    enqueueSnackbar("Error during cancel Trash Area", errorNotify);
+                }
+            })
+
+        fetchTrashAreas();
     }
 
     const getSelectedDriver = () => {
@@ -164,7 +186,7 @@ function TrashCollect(props) {
                     color="inherit"
                     className={classes.button}
                     startIcon={<RefreshIcon />}
-                    onClick={() => { fetchTrashAreas() }}
+                    onClick={() => { handleRefresh() }}
                 >
                     Refresh
                 </Button>

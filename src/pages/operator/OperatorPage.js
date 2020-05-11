@@ -163,6 +163,7 @@ export default function OperatorPage() {
                             drivers={drivers}
                             fetchData={fetchData}
                             fetchTrashAreas={fetchTrashAreas}
+                            fetchGenerateStatus={fetchGenerateStatus}
                             isGenerating={isGenerating}
                             lastGenerate={lastGenerate}
                             generateTrashArea={generateTrashArea}

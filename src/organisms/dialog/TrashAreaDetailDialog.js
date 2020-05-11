@@ -35,10 +35,8 @@ function TrashAreaDetailDialog(props) {
     }, [])
 
     const handleCancelTrashArea = (id) => {
-        console.log("Id: " + id);
         cancelTrashArea(userData.userToken, id)
             .then(response => {
-                console.log(response);
                 if (response.data.success) {
 
                 }
