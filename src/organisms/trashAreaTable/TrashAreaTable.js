@@ -34,15 +34,21 @@ function TrashAreaTable(props) {
     const [orderBy, setOrderBy] = useState('numberOfRequest');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { trashAreas, selected, setSelected } = props;
+    const {
+        trashAreas,
+        selected,
+        setSelected,
+        setTrashAreaDetail,
+        setIsTrashAreaDetailDialogOpen
+    } = props;
 
     const [districts, setDistricts] = useState(['']);
     const [selectedDistrict, setSelectedDistrict] = useState('');
 
     const [displayTrashAreas, setDisplayTrashAreas] = useState([]);
 
-    const [trashAreaDetail, setTrashAreaDetail] = useState({});
-    const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
+    // const [trashAreaDetail, setTrashAreaDetail] = useState({});
+    // const [isOpenTrashAreaDetail, setIsOpenTrashAreaDetail] = useState(false);
 
     useEffect(() => {
         getDistricts();
@@ -146,7 +152,7 @@ function TrashAreaTable(props) {
 
     const handleDetailClick = (trashArea) => {
         setTrashAreaDetail(trashArea);
-        setIsOpenTrashAreaDetail(true);
+        setIsTrashAreaDetailDialogOpen(true);
     }
 
     const isSelected = (street) => selected.indexOf(street) !== -1;
@@ -265,13 +271,13 @@ function TrashAreaTable(props) {
                 page={page}
                 onChangePage={handleChangePage}
             />
-            {isOpenTrashAreaDetail &&
+            {/* {isOpenTrashAreaDetail &&
                 <TrashAreaDetailDialog
                     open={isOpenTrashAreaDetail}
                     setOpen={setIsOpenTrashAreaDetail}
                     trashArea={trashAreaDetail}
                 />
-            }
+            } */}
 
         </div>
     )

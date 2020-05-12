@@ -77,7 +77,7 @@ export default function OperatorPage() {
                     enqueueSnackbar("Fetch Trash Area data success", successNotify);
                     setTrashAreas(response.data.content);
                 } else {
-                    enqueueSnackbar(response.data.message, errorNotify);
+                    enqueueSnackbar("Error during fetch trash area", errorNotify);
                 }
             })
             .catch(error => {

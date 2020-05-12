@@ -12,6 +12,7 @@ import TrashAreaTable from '../../organisms/trashAreaTable/TrashAreaTable';
 import TrashCollectForm from '../../organisms/trashCollectForm/TrashCollectForm';
 import { sendDirection, cancelTrashArea } from '../../services/operatorService';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import TrashAreaDetailDialog from '../../organisms/dialog/TrashAreaDetailDialog';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -106,12 +107,13 @@ function TrashCollect(props) {
             .then(response => {
                 if (response.data.success) {
                     enqueueSnackbar("Cancel Trash Area success", successNotify);
+                    setIsTrashAreaDetailDialogOpen(false);
+                    fetchTrashAreas();
                 } else {
                     enqueueSnackbar("Error during cancel Trash Area", errorNotify);
                 }
             })
 
-        fetchTrashAreas();
     }
 
     const getSelectedDriver = () => {
@@ -193,7 +195,14 @@ function TrashCollect(props) {
             </Grid>
             <TabPanel value={activeStep} index={0}>
                 {trashAreas.length > 0
-                    ? <TrashAreaTable isCheckBox trashAreas={trashAreas} selected={selectedTrashIds} setSelected={setSelectedTrashIds} />
+                    ? <TrashAreaTable
+                        isCheckBox
+                        trashAreas={trashAreas}
+                        selected={selectedTrashIds}
+                        setSelected={setSelectedTrashIds}
+                        setTrashAreaDetail={setTrashAreaDetail}
+                        setIsTrashAreaDetailDialogOpen={setIsTrashAreaDetailDialogOpen}
+                    />
                     : <div>Don't have any trash to show</div>
                 }
 
@@ -204,6 +213,14 @@ function TrashCollect(props) {
             <TabPanel value={activeStep} index={2}>
                 <TrashCollectForm selectedTrash={getSelectedTrashList()} selectedDriver={getSelectedDriver()} />
             </TabPanel>
+            {isTrashAreaDetailDialogOpen &&
+                <TrashAreaDetailDialog
+                    open={isTrashAreaDetailDialogOpen}
+                    setOpen={setIsTrashAreaDetailDialogOpen}
+                    trashArea={trashAreaDetail}
+                    handleCancelTrashArea={handleCancelTrashArea}
+                />
+            }
         </div>
     );
 }

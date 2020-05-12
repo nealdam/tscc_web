@@ -28,24 +28,24 @@ function TrashAreaDetailDialog(props) {
     const [isImageLoading, setIsImageLoading] = useState(false);
 
     const [images, setImages] = useState([]);
-    const { open, setOpen, trashArea } = props;
+    const { open, setOpen, trashArea, handleCancelTrashArea } = props;
 
     useEffect(() => {
         fetchImages();
     }, [])
 
-    const handleCancelTrashArea = (id) => {
-        cancelTrashArea(userData.userToken, id)
-            .then(response => {
-                if (response.data.success) {
+    // const handleCancelTrashArea = (id) => {
+    //     cancelTrashArea(userData.userToken, id)
+    //         .then(response => {
+    //             if (response.data.success) {
 
-                }
-            })
-            .catch(error => {
-                console.log("Error during cancel trash are");
-                console.log(error);
-            });
-    }
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log("Error during cancel trash are");
+    //             console.log(error);
+    //         });
+    // }
 
     const handleClose = () => {
         setOpen(false);
