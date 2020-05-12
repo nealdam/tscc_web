@@ -62,9 +62,16 @@ function TrashAreaTable(props) {
                 newDistricts = newDistricts.concat(trashArea.district);
             }
         })
+
         setDistricts(newDistricts);
-        setSelectedDistrict(newDistricts[0]);
-        setNewDistrict(newDistricts[0]);
+
+        if (selectedDistrict === '') {
+            setSelectedDistrict(newDistricts[0]);
+            setNewDistrict(newDistricts[0]);
+        } else {
+            setNewDistrict(selectedDistrict);
+        }
+
     }
 
     function descendingComparator(a, b, orderBy) {
