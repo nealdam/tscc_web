@@ -42,15 +42,15 @@ export default function OperatorDrawer() {
             <List component="nav">
                 <ListItem button selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)} component={RouterLink} to="/operator">
                     <ListItemIcon><HomeIcon /></ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary="Trạng thái thu gom" />
                 </ListItem>
                 <ListItem button selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} component={RouterLink} to="/operator/collect">
                     <ListItemIcon><LocationOnIcon /></ListItemIcon>
-                    <ListItemText primary="Collect Trash" />
+                    <ListItemText primary="Thu gom rác" />
                 </ListItem>
                 <ListItem button selected={selectedIndex === 2} onClick={(event) => handleListItemClick(event, 2)} component={RouterLink} to="/operator/driver">
                     <ListItemIcon><TrashCarIcon /></ListItemIcon>
-                    <ListItemText primary="Driver" />
+                    <ListItemText primary="Tài xế" />
                 </ListItem>
                 {/* <ListItem button selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)} component={RouterLink} to="/operator/notification">
                     <ListItemIcon><NotificationIcon /></ListItemIcon>

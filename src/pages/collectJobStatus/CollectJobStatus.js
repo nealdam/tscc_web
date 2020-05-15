@@ -94,7 +94,7 @@ function CollectJobStatus(props) {
                         format="dd/MM/yyyy"
                         margin="dense"
                         id="date-picker-inline"
-                        label="Date"
+                        label="Ngày"
                         value={selectedDate}
                         disableFuture
                         onChange={handleDateChange}
@@ -130,8 +130,8 @@ function CollectJobStatus(props) {
                                             </IconButton>
                                         </Tooltip>
                                     }
-                                    title={collectJob.driver ? `Driver: ${collectJob.driver.name}` : "Driver Name"}
-                                    subheader={collectJob.createAt && `Assign at: ${getCreateDate(collectJob.createAt)}`}
+                                    title={collectJob.driver ? `Tài xế: ${collectJob.driver.name}` : "Tên tài xế"}
+                                    subheader={collectJob.createAt && `Giao vào lúc: ${getCreateDate(collectJob.createAt)}`}
                                 />
                                 <Divider />
                                 <CardContent>
@@ -141,7 +141,7 @@ function CollectJobStatus(props) {
                         </GridListTile>
                     ))}
                 </GridList>
-                : <div>No data to show</div>
+                : <div>Không có dữ liệu</div>
             }
             {selectedCollectJob && <CollectJobDetailDialog open={isDetailDialogOpen} setOpen={setIsDetailDialogOpen} collectJob={selectedCollectJob} />}
         </div>

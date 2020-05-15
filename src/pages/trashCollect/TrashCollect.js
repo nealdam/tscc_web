@@ -106,7 +106,7 @@ function TrashCollect(props) {
         cancelTrashArea(userData.userToken, id)
             .then(response => {
                 if (response.data.success) {
-                    enqueueSnackbar("Cancel Trash Area success", successNotify);
+                    enqueueSnackbar("Hủy điểm rác thành công", successNotify);
                     setIsTrashAreaDetailDialogOpen(false);
                     fetchTrashAreas();
                 } else {
@@ -154,13 +154,13 @@ function TrashCollect(props) {
             />
             <Grid container justify="space-between" alignItems="center">
                 <ButtonGroup color="primary" aria-label="outlined primary button group">
-                    <Button disabled={activeStep === 0} onClick={handleBackStep}>Back</Button>
-                    <Button disabled={isNext()} onClick={handleNextStep}>Next</Button>
+                    <Button disabled={activeStep === 0} onClick={handleBackStep}>Trở về</Button>
+                    <Button disabled={isNext()} onClick={handleNextStep}>Tiếp theo</Button>
                     {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
                     }
                 </ButtonGroup>
                 <Typography>
-                    Last generate: {lastGenerate}
+                    Phát sinh lần cuối: {lastGenerate}
                 </Typography>
 
                 {isGenerating
@@ -171,7 +171,7 @@ function TrashCollect(props) {
                         startIcon={<RefreshIcon />}
                         disabled
                     >
-                        Generating
+                        Đang phát sinh điểm rác
                     </Button>
                     : <Button
                         variant="contained"
@@ -180,7 +180,7 @@ function TrashCollect(props) {
                         startIcon={<RefreshIcon />}
                         onClick={() => generateTrashArea()}
                     >
-                        Generate Trash Area
+                        Phát sinh điểm rác
                     </Button>
                 }
                 <Button
@@ -203,7 +203,7 @@ function TrashCollect(props) {
                         setTrashAreaDetail={setTrashAreaDetail}
                         setIsTrashAreaDetailDialogOpen={setIsTrashAreaDetailDialogOpen}
                     />
-                    : <div>Don't have any trash to show</div>
+                    : <div>Không có điểm rác để hiển thị</div>
                 }
 
             </TabPanel>

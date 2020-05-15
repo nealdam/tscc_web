@@ -96,7 +96,7 @@ function TrashAreaDetailDialog(props) {
             fullWidth={true}
             maxWidth={'md'}
         >
-            <DialogTitle>Trash Area Detail</DialogTitle>
+            <DialogTitle>Chi tiết điểm rác</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={7} >
@@ -119,7 +119,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Address"
+                                label="Địa chỉ"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -130,7 +130,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Number of request"
+                                label="Số yêu cầu"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -141,7 +141,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Size (kg)"
+                                label="Khối lượng (kg)"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -152,7 +152,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Width (&#13221;)"
+                                label="Thể tích (&#13221;)"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -163,7 +163,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Type"
+                                label="Loại"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -174,7 +174,7 @@ function TrashAreaDetailDialog(props) {
                             <TextField
                                 className={classes.textField}
                                 variant="outlined"
-                                label="Last update"
+                                label="Cập nhật lần cuối"
                                 size="small"
                                 fullWidth={true}
                                 InputProps={{
@@ -199,10 +199,10 @@ function TrashAreaDetailDialog(props) {
                     color="secondary"
                     onClick={() => handleCancelTrashArea(trashArea.id)}
                 >
-                    Cancel Trash Area
+                    Hủy điểm rác
                 </Button>
                 <Button variant="contained" color="default" onClick={handleClose}>
-                    Close
+                    Đóng
                 </Button>
             </DialogActions>
         </Dialog>

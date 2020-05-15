@@ -61,6 +61,7 @@ export default function OperatorPage() {
         getCollectJobByDate(userData.userToken, chooseDate)
             .then(response => {
                 setCollectJobs(response.data.content);
+                console.log(response.data.content);
                 enqueueSnackbar("Fetch collect job success", successNotify);
             })
             .catch(error => {

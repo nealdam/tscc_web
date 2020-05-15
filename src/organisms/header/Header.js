@@ -33,7 +33,7 @@ export default function Header() {
           color="inherit"
           onClick={() => auth.signOut()}
         >
-          Logout
+          Đăng xuất
           </Button>
       </Toolbar>
     </AppBar>

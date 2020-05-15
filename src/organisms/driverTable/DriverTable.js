@@ -147,12 +147,12 @@ function DriverTable(props) {
                                             {isOnShift(row.shift)
                                                 ? <Chip
                                                     size="small"
-                                                    label="On Shift"
+                                                    label="Trong ca"
                                                     color="primary"
                                                 />
                                                 : <Chip
                                                     size="small"
-                                                    label="Out Shift"
+                                                    label="Ngoài ca"
                                                     color="secondary"
                                                 />
                                             }

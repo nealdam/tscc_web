@@ -1,1 +1,1 @@
-export const collectTrashSteps = ['Select Trash Areas', 'Select Driver', 'Confirm'];
+export const collectTrashSteps = ['Chọn điểm rác', 'Chọn tài xế', 'Xác nhận'];
