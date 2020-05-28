@@ -33,7 +33,8 @@ function TrashCollect(props) {
         fetchGenerateStatus,
         isGenerating,
         lastGenerate,
-        generateTrashArea
+        generateTrashArea,
+        isDriverOnDuty
     } = props;
 
     const { enqueueSnackbar } = useSnackbar();
@@ -156,7 +157,7 @@ function TrashCollect(props) {
                 <ButtonGroup color="primary" aria-label="outlined primary button group">
                     <Button disabled={activeStep === 0} onClick={handleBackStep}>Trở về</Button>
                     <Button disabled={isNext()} onClick={handleNextStep}>Tiếp theo</Button>
-                    {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Confirm</Button>
+                    {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Xác nhận</Button>
                     }
                 </ButtonGroup>
                 <Typography>
@@ -208,7 +209,7 @@ function TrashCollect(props) {
 
             </TabPanel>
             <TabPanel value={activeStep} index={1}>
-                <DriverTable drivers={drivers} selected={selectedDriverId} setSelected={setSelectedDriverId} />
+                <DriverTable drivers={drivers} selected={selectedDriverId} setSelected={setSelectedDriverId} isDriverOnDuty={isDriverOnDuty} />
             </TabPanel>
             <TabPanel value={activeStep} index={2}>
                 <TrashCollectForm selectedTrash={getSelectedTrashList()} selectedDriver={getSelectedDriver()} />

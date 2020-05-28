@@ -31,7 +31,7 @@ function DriverTable(props) {
     // const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { drivers, selected, setSelected, isForSelect = true } = props;
+    const { drivers, selected, setSelected, isForSelect = true, isDriverOnDuty } = props;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, drivers.length - page * rowsPerPage);
 
@@ -110,62 +110,78 @@ function DriverTable(props) {
                         isDisableCheckAll={true}
                         isCheckBoxAll={isForSelect}
                     />
-                    <TableBody>
-                        {stableSort(drivers, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row, index) => {
-                                const isItemSelected = isSelected(row.id);
-                                const labelId = `enhanced-table-checkbox-${index}`;
+                    {drivers
+                        ? <TableBody>
+                            {stableSort(drivers, getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
+                                    const isItemSelected = isSelected(row.id);
+                                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                                return (
-                                    <TableRow
-                                        hover
-                                        role="checkbox"
-                                        aria-checked={isItemSelected}
-                                        tabIndex={-1}
-                                        key={row.id}
-                                        selected={isItemSelected}
-                                    >
+                                    return (
+                                        <TableRow
+                                            hover
+                                            role="checkbox"
+                                            aria-checked={isItemSelected}
+                                            tabIndex={-1}
+                                            key={row.id}
+                                            selected={isItemSelected}
+                                        >
 
-                                        {isForSelect &&
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    onClick={(event) => handleClick(event, row.id)}
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
-                                        }
-                                        <TableCell component="th" id={labelId} scope="row" padding="none">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
-                                        <TableCell align="left" padding="none">{row.phone}</TableCell>
-                                        <TableCell align="left" padding="none">{row.email}</TableCell>
-                                        <TableCell align="left" padding="none"></TableCell>
-                                        <TableCell align="left" padding="none">
-                                            {isOnShift(row.shift)
-                                                ? <Chip
-                                                    size="small"
-                                                    label="Trong ca"
-                                                    color="primary"
-                                                />
-                                                : <Chip
-                                                    size="small"
-                                                    label="Ngoài ca"
-                                                    color="secondary"
-                                                />
+                                            {isForSelect &&
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        onClick={(event) => handleClick(event, row.id)}
+                                                        checked={isItemSelected}
+                                                        inputProps={{ 'aria-labelledby': labelId }}
+                                                    />
+                                                </TableCell>
                                             }
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 53 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                    </TableBody>
+                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
+                                            <TableCell align="left" padding="none">{row.phone}</TableCell>
+                                            <TableCell align="left" padding="none">{row.email}</TableCell>
+                                            <TableCell align="left" padding="none">
+                                                {isDriverOnDuty(row.id)
+                                                    ? <Chip
+                                                        size="small"
+                                                        label="Đang thu gom"
+                                                        color="default"
+                                                    />
+                                                    : <Chip
+                                                        size="small"
+                                                        label="Sẵn sàng"
+                                                        color="primary"
+                                                    />
+                                                }
+                                            </TableCell>
+                                            <TableCell align="left" padding="none">
+                                                {isOnShift(row.shift)
+                                                    ? <Chip
+                                                        size="small"
+                                                        label="Trong ca"
+                                                        color="primary"
+                                                    />
+                                                    : <Chip
+                                                        size="small"
+                                                        label="Ngoài ca"
+                                                        color="default"
+                                                    />
+                                                }
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 53 * emptyRows }}>
+                                    <TableCell colSpan={6} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                        : <div>Không có dữ liệu hiển thị</div>
+                    }
                 </Table>
             </TableContainer>
             <TablePagination
@@ -183,6 +199,10 @@ DriverTable.propTypes = {
     drivers: PropTypes.array.isRequired,
     selected: PropTypes.array.isRequired,
     setSelected: PropTypes.func.isRequired,
+}
+
+DriverTable.defaultProps = {
+    drivers: [],
 }
 
 export default DriverTable;

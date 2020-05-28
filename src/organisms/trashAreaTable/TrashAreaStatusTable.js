@@ -7,6 +7,7 @@ import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHea
 import { isToday } from '../../utils/dateUtil';
 import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
 import { getCollectStatusAvatar } from '../../utils/statusUtil';
+import { getTrashTypeName } from '../../utils/trashTypeUtil';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -160,9 +161,9 @@ function TrashAreaStatusTable(props) {
                                     >
                                         <TableCell align="left" padding="default">{row.streetNumber}</TableCell>
                                         <TableCell align="left">{row.street}</TableCell>
-                                        <TableCell align="left">{row.size.name}</TableCell>
-                                        <TableCell align="left">{row.width.name}</TableCell>
-                                        <TableCell align="left">{row.type.name}</TableCell>
+                                        <TableCell align="left">{row.size}</TableCell>
+                                        <TableCell align="left">{row.width}</TableCell>
+                                        <TableCell align="left">{getTrashTypeName(row.type.name)}</TableCell>
                                         <TableCell align="center">{row.numberOfRequest}</TableCell>
                                         <TableCell align="center">
                                             {getCollectStatusAvatar(row.status.name)}

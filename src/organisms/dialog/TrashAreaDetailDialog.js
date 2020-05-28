@@ -5,6 +5,7 @@ import { UserContext } from '../../context/PageProvider';
 import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
 import { getImageAPI, cancelTrashArea } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
+import { getTrashTypeName } from '../../utils/trashTypeUtil';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -169,7 +170,7 @@ function TrashAreaDetailDialog(props) {
                                 InputProps={{
                                     readOnly: true,
                                 }}
-                                value={trashArea.type.name}
+                                value={getTrashTypeName(trashArea.type.name)}
                             />
                             <TextField
                                 className={classes.textField}

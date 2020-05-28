@@ -13,7 +13,7 @@ const DriverDetail = (props) => {
 
     const classes = useStyles();
 
-    const { drivers, refreshData } = props;
+    const { drivers, refreshData, isDriverOnDuty } = props;
 
     return (
         <div>
@@ -28,7 +28,9 @@ const DriverDetail = (props) => {
                     Refresh
                 </Button>
             </Grid>
-            <DriverTable drivers={drivers} selected={''} setSelected={''} isForSelect={false} />
+            {drivers
+                ? <DriverTable drivers={drivers} selected={''} setSelected={''} isForSelect={false} isDriverOnDuty={isDriverOnDuty} />
+                : <div></div>}
         </div>
     )
 }

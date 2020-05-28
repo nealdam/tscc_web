@@ -1,8 +1,8 @@
 export const trashAreaHeadCells = [
     { id: 'streetNumber', numeric: false, disablePadding: true, label: 'Số nhà' },
     { id: 'street', numeric: false, disablePadding: false, label: 'Đường' },
-    { id: 'size', numeric: false, disablePadding: false, label: 'Khối lượng' },
-    { id: 'width', numeric: false, disablePadding: false, label: 'Thể tích' },
+    { id: 'size', numeric: false, disablePadding: false, label: 'Khối lượng (kg)' },
+    { id: 'width', numeric: false, disablePadding: false, label: 'Thể tích (㎥)' },
     { id: 'type', numeric: false, disablePadding: false, label: 'Loại' },
     { id: 'numberOfRequest', numeric: false, disablePadding: false, label: 'Số yêu cầu' },
     { id: 'createAt', numeric: false, disablePadding: false, label: 'Cập nhật lần cuối' },
@@ -12,8 +12,8 @@ export const trashAreaHeadCells = [
 export const trashAreaStatusHeadCells = [
     { id: 'streetNumber', numeric: false, disablePadding: false, label: 'Số nhà' },
     { id: 'street', numeric: false, disablePadding: false, label: 'Đường' },
-    { id: 'size', numeric: false, disablePadding: false, label: 'Khối lượng' },
-    { id: 'width', numeric: false, disablePadding: false, label: 'Thể tích' },
+    { id: 'size', numeric: false, disablePadding: false, label: 'Khối lượng (kg)' },
+    { id: 'width', numeric: false, disablePadding: false, label: 'Thể tích (㎥)' },
     { id: 'type', numeric: false, disablePadding: false, label: 'Loại' },
     { id: 'numberOfRequest', numeric: false, disablePadding: false, label: 'Số yêu cầu' },
     { id: 'status', numeric: false, disablePadding: false, label: 'Trạng thái' },

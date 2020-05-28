@@ -1,18 +1,16 @@
 import { makeStyles } from '@material-ui/core'
-import React, { useState, useContext, useEffect } from 'react'
+import { isToday } from 'date-fns'
+import { useSnackbar } from 'notistack'
+import React, { useContext, useEffect, useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { errorNotify, infoNotify, successNotify } from '../../constants/notistackOption'
+import { UserContext } from '../../context/PageProvider'
 import OperatorDrawer from '../../organisms/drawer/OperatorDrawer'
 import Header from '../../organisms/header/Header'
-import TrashCollect from '../trashCollect/TrashCollect'
+import { generateTrashAreas, getCollectJobByDate, getDrivers, getGenerateStatus, getTrashAreas } from '../../services/operatorService'
 import CollectJobStatus from '../collectJobStatus/CollectJobStatus'
-import { getCollectJobByDate, getTrashAreas, getDrivers, getGenerateStatus, generateTrashAreas } from '../../services/operatorService'
-import { UserContext } from '../../context/PageProvider'
-import { useSnackbar } from 'notistack'
-import { successNotify, errorNotify, infoNotify } from '../../constants/notistackOption'
-import DriverTable from '../../organisms/driverTable/DriverTable'
 import DriverDetail from '../driverDetail/DriverDetail'
-import { getDayTimeText } from '../../utils/dateUtil'
-import { isToday } from 'date-fns'
+import TrashCollect from '../trashCollect/TrashCollect'
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -39,6 +37,8 @@ export default function OperatorPage() {
     const [lastGenerate, setLastGenerate] = useState("Not yet");
     const [drivers, setDrivers] = useState([]);
 
+    const [todayCollectJobs, setTodayCollectJobs] = useState([]);
+
     useEffect(() => {
         fetchData();
     }, ['']);
@@ -47,7 +47,34 @@ export default function OperatorPage() {
         fetchCollectJob();
         fetchTrashAreas();
         fetchGenerateStatus();
+        fetchTodayCollectJob();
         fetchDrivers();
+
+    }
+
+    const isDriverOnDuty = (driverId) => {
+        let result = false;
+        console.log("--- Is Driver on duty ---");
+        console.log("find driver id: " + driverId);
+
+        todayCollectJobs.forEach(collectJob => {
+            console.log("Collect job: " + collectJob.id);
+            console.log("Driver id: " + collectJob.driver.id);
+
+            if (driverId === collectJob.driver.id && collectJob.status.name === "PROCESSING") {
+                result = true;
+                return result;
+            }
+        })
+
+        return result;
+    }
+
+    const fetchTodayCollectJob = () => {
+        getCollectJobByDate(userData.userToken, new Date())
+            .then(response => {
+                setTodayCollectJobs(response.data.content);
+            })
     }
 
     const fetchCollectJob = (date) => {
@@ -168,10 +195,11 @@ export default function OperatorPage() {
                             isGenerating={isGenerating}
                             lastGenerate={lastGenerate}
                             generateTrashArea={generateTrashArea}
+                            isDriverOnDuty={isDriverOnDuty}
                         />
                     </Route>
                     <Route exact path={`${path}/driver`} >
-                        <DriverDetail drivers={drivers} refreshData={fetchDrivers} />
+                        <DriverDetail drivers={drivers} refreshData={fetchDrivers} isDriverOnDuty={isDriverOnDuty} />
                     </Route>
                 </Switch>
             </main>
