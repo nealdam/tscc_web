@@ -68,9 +68,11 @@ function TrashAreaDetailDialog(props) {
                 imageDirs.push(imageDir);
             })
 
-            trashForm.unRecognizeImageDirs.map(otherImageDir => {
-                otherImageDirs.push(otherImageDir);
-            })
+            if (trashForm.unRecognizeImageDirs) {
+                trashForm.unRecognizeImageDirs.map(otherImageDir => {
+                    otherImageDirs.push(otherImageDir);
+                })
+            }
         })
 
         getImageAPI(userData.userToken, imageDirs)
@@ -133,7 +135,7 @@ function TrashAreaDetailDialog(props) {
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={7} >
-                        <AppBar position="static">
+                        <AppBar position="static" color="inherit">
                             <Tabs value={tabValue} onChange={handleTabChange}>
                                 <Tab label="Categorized" {...a11yProps(0)} />
                                 <Tab label="Uncategorized" {...a11yProps(1)} />
@@ -162,7 +164,7 @@ function TrashAreaDetailDialog(props) {
                                     {otherImages.map((image, index) => {
                                         return (
                                             <GridListTile key={index} col={1}>
-                                                <img src={image} alt={index} />
+                                                <img src={image} alt={`other ${index}`} />
                                             </GridListTile>
                                         )
                                     })}
