@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, GridList, GridListTile, LinearProgress, makeStyles, TextField } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, GridList, GridListTile, LinearProgress, makeStyles, TextField, Divider, Box, Typography, AppBar, Tabs, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/PageProvider';
@@ -29,6 +29,10 @@ function TrashAreaDetailDialog(props) {
     const [isImageLoading, setIsImageLoading] = useState(false);
 
     const [images, setImages] = useState([]);
+    const [otherImages, setOtherImages] = useState([]);
+
+    const [tabValue, setTabValue] = useState(0);
+
     const { open, setOpen, trashArea, handleCancelTrashArea } = props;
 
     useEffect(() => {
@@ -57,10 +61,15 @@ function TrashAreaDetailDialog(props) {
         setIsImageLoading(true);
 
         let imageDirs = [];
+        let otherImageDirs = [];
 
         trashArea.ltrashForms.map(trashForm => {
             trashForm.imageDirs.map(imageDir => {
                 imageDirs.push(imageDir);
+            })
+
+            trashForm.unRecognizeImageDirs.map(otherImageDir => {
+                otherImageDirs.push(otherImageDir);
             })
         })
 
@@ -80,6 +89,25 @@ function TrashAreaDetailDialog(props) {
             .finally(() => {
                 setIsImageLoading(false);
             });
+
+        getImageAPI(userData.userToken, otherImageDirs)
+            .then(responseArr => {
+                let newOtherImages = [];
+
+                responseArr.forEach(response => {
+                    newOtherImages.push(response.data);
+                })
+
+                setOtherImages(newOtherImages);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => {
+                setIsImageLoading(false);
+            });
+
+
     }
 
     const dateOfString = (dateString) => {
@@ -88,6 +116,10 @@ function TrashAreaDetailDialog(props) {
             return d.toLocaleTimeString();
         }
         return d.toLocaleString();
+    }
+
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
     }
 
     return (
@@ -101,18 +133,42 @@ function TrashAreaDetailDialog(props) {
             <DialogContent dividers>
                 <Grid container spacing={2}>
                     <Grid item xs={7} >
-                        {isImageLoading
-                            ? <LinearProgress />
-                            : <GridList cellHeight={160} cols={3} spacing={4} style={{ height: 550 }} >
-                                {images.map((image, index) => {
-                                    return (
-                                        <GridListTile key={index} col={1}>
-                                            <img src={image} alt={index} />
-                                        </GridListTile>
-                                    )
-                                })}
-                            </GridList>
-                        }
+                        <AppBar position="static">
+                            <Tabs value={tabValue} onChange={handleTabChange}>
+                                <Tab label="Categorized" {...a11yProps(0)} />
+                                <Tab label="Uncategorized" {...a11yProps(1)} />
+                            </Tabs>
+                        </AppBar>
+
+                        <TabPanel value={tabValue} index={0} >
+                            {isImageLoading
+                                ? <LinearProgress />
+                                : <GridList cellHeight={160} cols={3} spacing={4} style={{ height: 550 }} >
+                                    {images.map((image, index) => {
+                                        return (
+                                            <GridListTile key={index} col={1}>
+                                                <img src={image} alt={index} />
+                                            </GridListTile>
+                                        )
+                                    })}
+                                </GridList>
+                            }
+                        </TabPanel>
+
+                        <TabPanel value={tabValue} index={1} >
+                            {isImageLoading
+                                ? <LinearProgress />
+                                : <GridList cellHeight={160} cols={3} spacing={4} style={{ height: 550 }} >
+                                    {otherImages.map((image, index) => {
+                                        return (
+                                            <GridListTile key={index} col={1}>
+                                                <img src={image} alt={index} />
+                                            </GridListTile>
+                                        )
+                                    })}
+                                </GridList>
+                            }
+                        </TabPanel>
 
                     </Grid>
                     <Grid item xs={5}>
@@ -214,6 +270,33 @@ TrashAreaDetailDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
     trashArea: PropTypes.object.isRequired,
+}
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
 }
 
 export default TrashAreaDetailDialog;
