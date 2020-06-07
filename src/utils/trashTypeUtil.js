@@ -12,7 +12,7 @@ export const getTrashTypeName = (type) => {
     }
 }
 
-export const getTrashTypeGroup = (trashArea) => {
+export const getTrashTypeGroup = (trashArea, isText) => {
     let isOrganic = false;
     let isRecycle = false;
     let isOther = false;
@@ -34,6 +34,25 @@ export const getTrashTypeGroup = (trashArea) => {
             isOther = true;
         }
     });
+
+    if (isText) {
+        let text = "";
+        if (isOrganic) {
+            text = text + "Hữu cơ, ";
+        }
+        if (isRecycle) {
+            text = text + "Tái chế, ";
+        }
+        if (isOther) {
+            text = text + "Loại khác";
+        }
+
+        if (text.endsWith(", ")) {
+            text.substr(0, text.length - 2);
+        }
+
+        return text
+    }
 
     return (
         <TrashTypeGroup
