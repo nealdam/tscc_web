@@ -25,8 +25,8 @@ function TrashCollectForm(props) {
                                 <TableRow key={trash.id}>
                                     <TableCell>{`${trash.streetNumber} ${trash.street}, ${trash.district}`}</TableCell>
                                     <TableCell>{trash.size}</TableCell>
-                                    <TableCell>{trash.width}</TableCell>
                                     <TableCell>{trash.type.name}</TableCell>
+                                    <TableCell>{trash.width}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
