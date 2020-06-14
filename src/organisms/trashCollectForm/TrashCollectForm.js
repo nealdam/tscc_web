@@ -15,9 +15,9 @@ function TrashCollectForm(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Address</TableCell>
-                                <TableCell>Size</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell>Width</TableCell>
+                                <TableCell>Khối lượng</TableCell>
+                                <TableCell>Thể tích</TableCell>
+                                <TableCell>Loại</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -25,8 +25,8 @@ function TrashCollectForm(props) {
                                 <TableRow key={trash.id}>
                                     <TableCell>{`${trash.streetNumber} ${trash.street}, ${trash.district}`}</TableCell>
                                     <TableCell>{trash.size}</TableCell>
-                                    <TableCell>{trash.type.name}</TableCell>
                                     <TableCell>{trash.width}</TableCell>
+                                    <TableCell>{trash.type.name}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
