@@ -10,11 +10,11 @@ function TrashCollectForm(props) {
         <div>
             <Grid container spacing={3}>
                 <Grid item xs>
-                    <Typography variant="h4">Selected Trash Area</Typography>
+                    <Typography variant="h4">Điểm rác được chọn</Typography>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Address</TableCell>
+                                <TableCell>Địa chỉ</TableCell>
                                 <TableCell>Khối lượng</TableCell>
                                 <TableCell>Thể tích</TableCell>
                                 <TableCell>Loại</TableCell>
@@ -33,11 +33,11 @@ function TrashCollectForm(props) {
                     </Table>
                 </Grid>
                 <Grid item xs={5}>
-                    <Typography variant="h4">Selected Driver</Typography>
+                    <Typography variant="h4">Tài xế được chọn</Typography>
                     {selectedDriver && (
                         <div>
                             <TextField
-                                label="Driver name"
+                                label="Tên"
                                 style={{ marginTop: 20 }}
                                 defaultValue={selectedDriver.name}
                                 InputProps={{
@@ -46,7 +46,7 @@ function TrashCollectForm(props) {
                             // variant="outlined"
                             />
                             <TextField
-                                label="Employee Code"
+                                label="MS nhân viên"
                                 style={{ marginTop: 20 }}
                                 defaultValue={selectedDriver.employeeCode}
                                 InputProps={{
