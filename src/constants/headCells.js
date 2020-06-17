@@ -24,6 +24,7 @@ export const driverHeadCells = [
     { id: 'employeeCode', numeric: false, disablePadding: true, label: 'Mã số' },
     { id: 'phone', numeric: false, disablePadding: true, label: 'Điện thoại' },
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
+    { id: 'email', numeric: false, disablePadding: true, label: 'Tải trọng(kg)' },
     { id: 'status', numeric: false, disablePadding: true, label: 'Trạng thái' },
     { id: 'shift', numeric: false, disablePadding: true, label: 'Ca làm' },
 ]

@@ -143,6 +143,7 @@ function DriverTable(props) {
                                             <TableCell align="left" padding="none">{row.employeeCode}</TableCell>
                                             <TableCell align="left" padding="none">{row.phone}</TableCell>
                                             <TableCell align="left" padding="none">{row.email}</TableCell>
+                                            <TableCell align="left" padding="none">{row.maxWeight}</TableCell>
                                             <TableCell align="left" padding="none">
                                                 {isDriverOnDuty(row.id)
                                                     ? <Chip
