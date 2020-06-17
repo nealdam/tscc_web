@@ -64,15 +64,15 @@ function TrashCollect(props) {
         sendDirection(userData.userToken, body)
             .then(response => {
                 if (response.data.success) {
-                    enqueueSnackbar("Send direction success", successNotify);
+                    enqueueSnackbar("Gửi tuyến đường thành công", successNotify);
                 } else {
-                    enqueueSnackbar("Fail to send direction", errorNotify);
+                    enqueueSnackbar("Lỗi không mong muốn khi gửi tuyến đường", errorNotify);
                 }
             })
             .catch(error => {
-                console.log("Error during send direction");
+                console.log("Lỗi không mong muốn khi gửi tuyến đường");
                 console.log(error);
-                enqueueSnackbar("Error during send direction", errorNotify);
+                enqueueSnackbar("Lỗi không mong muốn khi gửi tuyến đường", errorNotify);
             })
             .finally(() => {
                 history.push("/operator");
@@ -111,7 +111,7 @@ function TrashCollect(props) {
                     setIsTrashAreaDetailDialogOpen(false);
                     fetchTrashAreas();
                 } else {
-                    enqueueSnackbar("Error during cancel Trash Area", errorNotify);
+                    enqueueSnackbar("Lỗi không mong muốn khi hủy điểm rác", errorNotify);
                 }
             })
 

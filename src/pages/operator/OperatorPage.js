@@ -89,12 +89,12 @@ export default function OperatorPage() {
             .then(response => {
                 setCollectJobs(response.data.content);
                 console.log(response.data.content);
-                enqueueSnackbar("Fetch collect job success", successNotify);
+                enqueueSnackbar("Tải nhiệm vụ thành công", successNotify);
             })
             .catch(error => {
-                console.log("Error during fetch collect job");
+                console.log("Lỗi không mong muốn khi tải nhiệm vụ");
                 console.log(error);
-                enqueueSnackbar("Error during fetch collect job", errorNotify);
+                enqueueSnackbar("Lỗi không mong muốn khi tải nhiệm vụ", errorNotify);
             })
     }
 
@@ -102,27 +102,27 @@ export default function OperatorPage() {
         getTrashAreas(userData.userToken)
             .then(response => {
                 if (response.data.success) {
-                    enqueueSnackbar("Fetch Trash Area data success", successNotify);
+                    enqueueSnackbar("Tải điểm rác thành công", successNotify);
                     setTrashAreas(response.data.content);
                 } else {
-                    enqueueSnackbar("Error during fetch trash area", errorNotify);
+                    enqueueSnackbar("Lỗi không mong muốn khi tải điểm rác", errorNotify);
                 }
             })
             .catch(error => {
-                console.log("Error during fetch Trash Area");
+                console.log("Lỗi không mong muốn khi tải điểm rác");
                 console.log(error);
-                enqueueSnackbar("Error during fetch Trash Area", errorNotify);
+                enqueueSnackbar("Lỗi không mong muốn khi tải điểm rác", errorNotify);
             });
     }
 
     const generateTrashArea = () => {
         generateTrashAreas(userData.userToken)
             .then(response => {
-                enqueueSnackbar("Start generating Trash Areas", infoNotify);
+                enqueueSnackbar("Bắt đầu tạo điểm rác", infoNotify);
                 fetchGenerateStatus();
             })
             .catch(error => {
-                console.log("Error during generate Trash Areas");
+                console.log("Lỗi không mong muốn khi tạo điểm rác");
                 console.log(error);
             })
     }
@@ -142,7 +142,7 @@ export default function OperatorPage() {
                 setLastGenerate(dateString);
             })
             .catch(error => {
-                console.log("Error during fetch generate status");
+                console.log("Lỗi không mong muốn khi tải trạng thái tạo điểm rác");
                 console.log(error);
             })
     }
@@ -151,16 +151,16 @@ export default function OperatorPage() {
         getDrivers(userData.userToken)
             .then(response => {
                 if (response.data.success) {
-                    enqueueSnackbar("Fetch Drivers data success", successNotify);
+                    enqueueSnackbar("Tải danh sách tài xế thành công", successNotify);
                     setDrivers(response.data.content);
                 } else {
                     enqueueSnackbar(response.data.message, errorNotify);
                 }
             })
             .catch(error => {
-                console.log("Error during fetch Drivers");
+                console.log("Lỗi không mong muốn khi tải danh sách tài xế");
                 console.log(error);
-                enqueueSnackbar("Error during fetch Drivers", errorNotify);
+                enqueueSnackbar("Lỗi không mong muốn khi tải danh sách tài xế", errorNotify);
             })
     }
 

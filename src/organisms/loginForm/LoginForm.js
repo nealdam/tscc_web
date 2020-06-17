@@ -17,10 +17,10 @@ export default function LoginForm() {
     //TODO: validate
     signinWithEmailAndPassword(username, password)
       .then(response => {
-        enqueueSnackbar("Login successful", successNotify);
+        enqueueSnackbar("Đăng nhập thành công", successNotify);
       })
       .catch(error => {
-        enqueueSnackbar("Incorrect email or password", errorNotify);
+        enqueueSnackbar("Sai tên đăng nhập hoặc mật khẩu", errorNotify);
         console.log("Error code: " + error.code);
         console.log("Error message: " + error.message);
       });
@@ -34,7 +34,7 @@ export default function LoginForm() {
         required
         fullWidth
         id="username"
-        label="Username"
+        label="Tên đăng nhập"
         name="username"
         autoComplete="username"
         autoFocus
@@ -46,7 +46,7 @@ export default function LoginForm() {
         required
         fullWidth
         name="password"
-        label="Password"
+        label="Mật khẩu"
         type="password"
         id="password"
         autoComplete="current-password"
@@ -54,10 +54,10 @@ export default function LoginForm() {
       />
       <FormControlLabel
         control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
+        label="Ghi nhớ"
       />
       <Button type="submit" fullWidth variant="contained" color="primary" onClick={(e) => handleLogin(e)}>
-        Login
+        Đăng nhập
       </Button>
     </form>
   );
