@@ -110,7 +110,7 @@ function CollectJobStatus(props) {
                     startIcon={<RefreshIcon />}
                     onClick={() => { refreshData() }}
                 >
-                    Refresh
+                    Tải lại
                 </Button>
             </Grid>
             {collectJobs.length > 0 ?

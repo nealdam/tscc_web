@@ -25,7 +25,7 @@ const DriverDetail = (props) => {
                     startIcon={<RefreshIcon />}
                     onClick={() => { refreshData() }}
                 >
-                    Refresh
+                    Tải lại
                 </Button>
             </Grid>
             {drivers

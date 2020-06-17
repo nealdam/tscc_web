@@ -128,7 +128,7 @@ function TrashAreaTable(props) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = trashAreas.map((n) => n.id);
+            const newSelecteds = displayTrashAreas.map((n) => n.id);
             setSelected(newSelecteds);
             return;
         }
@@ -188,10 +188,10 @@ function TrashAreaTable(props) {
                 </Select>
             </FormControl> */}
             <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>District</InputLabel>
+                <InputLabel>Quận</InputLabel>
                 <Select
                     value={selectedDistrict}
-                    label="District"
+                    label="Quận"
                     onChange={handleDistrictChange}
                 >
                     {districts.map((district) => (

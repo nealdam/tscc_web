@@ -124,7 +124,7 @@ function TrashAreaStatusTable(props) {
                 <InputLabel>District</InputLabel>
                 <Select
                     value={selectedDistrict}
-                    label="District"
+                    label="Quận"
                     onChange={handleDistrictChange}
                 >
                     {districts.map((district) => (

@@ -28,7 +28,7 @@ export default function LoginPage() {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Login
+          Đăng nhập
         </Typography>
         <LoginForm />
       </div>

@@ -193,7 +193,7 @@ function TrashCollect(props) {
                     startIcon={<RefreshIcon />}
                     onClick={() => { handleRefresh() }}
                 >
-                    Refresh
+                    Tải lại
                 </Button>
             </Grid>
             <TabPanel value={activeStep} index={0}>
