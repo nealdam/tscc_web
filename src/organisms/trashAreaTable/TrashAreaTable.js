@@ -5,9 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { trashAreaHeadCells } from '../../constants/headCells';
 import EnhancedTableHead from '../../molecule/enhancedTableHead/EnhancedTableHead';
 import { isToday } from '../../utils/dateUtil';
-import TrashAreaDetailDialog from '../dialog/TrashAreaDetailDialog';
-import { getTrashTypeName, getTrashTypeGroup } from '../../utils/trashTypeUtil';
-import TrashTypeGroup from '../../molecule/trashTypeGroup/TrashTypeGroup';
+import { getTrashTypeGroup } from '../../utils/trashTypeUtil';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
