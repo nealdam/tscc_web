@@ -6,6 +6,7 @@ import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
 import { getImageAPI, cancelTrashArea } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
 import { getTrashTypeName, getTrashTypeGroup } from '../../utils/trashTypeUtil';
+import ConfirmDialog from './ConfirmDialog';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -137,8 +138,8 @@ function TrashAreaDetailDialog(props) {
                     <Grid item xs={7} >
                         <AppBar position="static" color="inherit">
                             <Tabs value={tabValue} onChange={handleTabChange}>
-                                <Tab label="Categorized" {...a11yProps(0)} />
-                                <Tab label="Uncategorized" {...a11yProps(1)} />
+                                <Tab label="Đã phân loại" {...a11yProps(0)} />
+                                <Tab label="Chưa phân loại" {...a11yProps(1)} />
                             </Tabs>
                         </AppBar>
 

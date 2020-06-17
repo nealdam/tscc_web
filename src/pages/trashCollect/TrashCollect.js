@@ -42,6 +42,8 @@ function TrashCollect(props) {
     const [activeStep, setActiveStep] = useState(0);
     const steps = collectTrashSteps;
 
+    const [isOverWeight, setIsOverWeight] = useState(true);
+
     const [selectedTrashIds, setSelectedTrashIds] = useState([]);
     const [selectedDriverId, setSelectedDriverId] = useState([]);
 
@@ -157,7 +159,7 @@ function TrashCollect(props) {
                 <ButtonGroup color="primary" aria-label="outlined primary button group">
                     <Button disabled={activeStep === 0} onClick={handleBackStep}>Trở về</Button>
                     <Button disabled={isNext()} onClick={handleNextStep}>Tiếp theo</Button>
-                    {activeStep === (steps.length - 1) && <Button onClick={(e) => handleSendCollectTrash()}>Xác nhận</Button>
+                    {(activeStep === (steps.length - 1) && !isOverWeight) && <Button onClick={(e) => handleSendCollectTrash()}>Xác nhận</Button>
                     }
                 </ButtonGroup>
                 <Typography>
@@ -212,7 +214,7 @@ function TrashCollect(props) {
                 <DriverTable drivers={drivers} selected={selectedDriverId} setSelected={setSelectedDriverId} isDriverOnDuty={isDriverOnDuty} />
             </TabPanel>
             <TabPanel value={activeStep} index={2}>
-                <TrashCollectForm selectedTrash={getSelectedTrashList()} selectedDriver={getSelectedDriver()} />
+                <TrashCollectForm selectedTrash={getSelectedTrashList()} selectedDriver={getSelectedDriver()} setIsOverWeight={setIsOverWeight} />
             </TabPanel>
             {isTrashAreaDetailDialogOpen &&
                 <TrashAreaDetailDialog

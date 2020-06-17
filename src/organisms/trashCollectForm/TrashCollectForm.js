@@ -6,14 +6,19 @@ import TrashTypeGroup from '../../molecule/trashTypeGroup/TrashTypeGroup';
 
 function TrashCollectForm(props) {
 
-    const { selectedTrash, selectedDriver } = props;
+    const { selectedTrash, selectedDriver, setIsOverWeight } = props;
 
     const getTotalSize = () => {
         let totalSize = 0;
+        setIsOverWeight(true)
 
         selectedTrash.forEach(trash => {
             totalSize += trash.size;
         });
+
+        if (totalSize < selectedDriver.maxWeight) {
+            setIsOverWeight(false);
+        }
 
         return totalSize.toFixed(2);
     }
@@ -137,6 +142,7 @@ function TrashCollectForm(props) {
                             />
                         </div>)
                     }
+                    {(getTotalSize() > selectedDriver.maxWeight) && <Typography variant="h3" color="secondary" ><b>Quá tải trọng xe</b></Typography>}
                 </Grid>
             </Grid>
         </div>
