@@ -41,29 +41,40 @@ function TrashCollectForm(props) {
 
 
         selectedTrash.forEach(trashArea => {
-            totalTrashForm.concat(trashArea.lTrashForm);
+            totalTrashForm = totalTrashForm.concat(trashArea.lTrashForms);
         })
 
-        isOrganic = totalTrashForm.map(trashForm => {
-            if (trashForm.type.name === "ORGANIC") {
-                return true;
+        console.log("ORGANIC")
+        totalTrashForm.every(trashForm => {
+            console.log("type: " + trashForm.trashType.name)
+            if (trashForm.trashType.name === "ORGANIC") {
+                isOrganic = true;
+                return false;
             }
-            return false;
+            return true;
         })
 
-        isRecycle = totalTrashForm.map(trashForm => {
-            if (trashForm.type.name === "RECYCLE") {
-                return true;
+        console.log("RECYCLE")
+        totalTrashForm.every(trashForm => {
+            console.log("type: " + trashForm.trashType.name)
+            if (trashForm.trashType.name === "RECYCLE") {
+                isRecycle = true;
+                return false;
             }
-            return false;
+            return true;
         })
 
-        isOther = totalTrashForm.map(trashForm => {
-            if (trashForm.type.name === "OTHER") {
-                return true;
+        console.log("OTHER")
+        totalTrashForm.every(trashForm => {
+            console.log("type: " + trashForm.trashType.name)
+            if (trashForm.trashType.name === "OTHER") {
+                isOther = true;
+                return false;
             }
-            return false;
+            return true;
         })
+
+        console.log(`all type: isOr ${isOrganic} isRe ${isRecycle} isOt ${isOther}`);
 
         return (
             <TrashTypeGroup
