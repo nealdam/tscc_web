@@ -94,8 +94,8 @@ function TrashCollectForm(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Địa chỉ</TableCell>
-                                <TableCell>Khối lượng</TableCell>
-                                <TableCell>Thể tích</TableCell>
+                                <TableCell>Khối lượng (kg)</TableCell>
+                                <TableCell>Thể tích (㎥)</TableCell>
                                 <TableCell align="center">Loại</TableCell>
                             </TableRow>
                         </TableHead>

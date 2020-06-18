@@ -141,7 +141,7 @@ function CollectJobStatus(props) {
                         </GridListTile>
                     ))}
                 </GridList>
-                : <div>Không có dữ liệu</div>
+                : <div>Không có thu gom trong ngày</div>
             }
             {selectedCollectJob && <CollectJobDetailDialog open={isDetailDialogOpen} setOpen={setIsDetailDialogOpen} collectJob={selectedCollectJob} />}
         </div>
