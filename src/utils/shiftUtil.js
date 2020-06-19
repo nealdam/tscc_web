@@ -6,7 +6,7 @@ export const isOnShift = (shift) => {
 
     if (shift === "ONE" && timeNow > 6 && timeNow < 14) {
         return true;
-    } else if (shift === "TWO" && timeNow > 15 && timeNow < 23) {
+    } else if (shift === "TWO" && timeNow > 14 && timeNow < 23) {
         return true;
     }
 

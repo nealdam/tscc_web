@@ -222,6 +222,7 @@ function TrashCollect(props) {
                     setOpen={setIsTrashAreaDetailDialogOpen}
                     trashArea={trashAreaDetail}
                     handleCancelTrashArea={handleCancelTrashArea}
+                    fetchTrashAreas={fetchTrashAreas}
                 />
             }
         </div>

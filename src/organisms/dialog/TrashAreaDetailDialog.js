@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../context/PageProvider';
 import TrashAreaMap from '../../molecule/trashAreaMap/TrashAreaMap';
-import { getImageAPI, cancelTrashArea } from '../../services/operatorService';
+import { getImageAPI, cancelTrashArea, updateTrashArea } from '../../services/operatorService';
 import { isToday } from '../../utils/dateUtil';
 import { getTrashTypeName, getTrashTypeGroup } from '../../utils/trashTypeUtil';
 import ConfirmDialog from './ConfirmDialog';
+import UpdateTrashAreaDialog from './UpdateTrashAreaDialog';
+import { useSnackbar } from 'notistack';
+import { successNotify, errorNotify } from '../../constants/notistackOption';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -27,6 +30,8 @@ function TrashAreaDetailDialog(props) {
 
     const userData = useContext(UserContext);
 
+    const { open, setOpen, trashArea, handleCancelTrashArea, fetchTrashAreas } = props;
+
     const [isImageLoading, setIsImageLoading] = useState(false);
 
     const [images, setImages] = useState([]);
@@ -34,24 +39,28 @@ function TrashAreaDetailDialog(props) {
 
     const [tabValue, setTabValue] = useState(0);
 
-    const { open, setOpen, trashArea, handleCancelTrashArea } = props;
+    const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+
+    const [isOrganic, setIsOrganic] = useState(false);
+    const [isRecycle, setIsRecycle] = useState(false);
+    const [isOther, setIsOther] = useState(false);
+    const [size, setSize] = useState(0.0);
+    const [width, setWidth] = useState(0.0);
+
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         fetchImages();
+        setUpdateDialogState();
     }, [])
 
-    // const handleCancelTrashArea = (id) => {
-    //     cancelTrashArea(userData.userToken, id)
-    //         .then(response => {
-    //             if (response.data.success) {
-
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.log("Error during cancel trash are");
-    //             console.log(error);
-    //         });
-    // }
+    const setUpdateDialogState = () => {
+        setIsOrganic()
+        setIsRecycle();
+        setIsOther();
+        setSize(trashArea.size);
+        setWidth(trashArea.width);
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -123,6 +132,29 @@ function TrashAreaDetailDialog(props) {
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
+    }
+
+    const handleOpenUpdateDialog = () => {
+        setIsUpdateDialogOpen(true);
+    }
+
+    const handleUpdateTrashArea = () => {
+        updateTrashArea(userData.userToken, trashArea.id, size, width)
+            .then(response => {
+                if (response.data.success) {
+                    enqueueSnackbar("Cập nhật điểm rác thành công", successNotify);
+                    setIsUpdateDialogOpen(false);
+                    fetchTrashAreas();
+                    handleClose();
+
+                } else {
+                    enqueueSnackbar("Lỗi không mong muốn khi cập nhật điểm rác", errorNotify);
+                }
+            })
+            .catch(error => {
+                console.log("update trash area error: " + error);
+                enqueueSnackbar("Lỗi không mong muốn khi cập nhật điểm rác", errorNotify);
+            })
     }
 
     return (
@@ -261,10 +293,33 @@ function TrashAreaDetailDialog(props) {
                 >
                     Hủy điểm rác
                 </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleOpenUpdateDialog}
+                >
+                    Cập nhật điểm rác
+                </Button>
                 <Button variant="contained" color="default" onClick={handleClose}>
                     Đóng
                 </Button>
             </DialogActions>
+
+            <UpdateTrashAreaDialog
+                open={isUpdateDialogOpen}
+                setOpen={setIsUpdateDialogOpen}
+                isOrganic={isOrganic}
+                setIsOrganic={setIsOrganic}
+                isRecycle={isRecycle}
+                setIsRecycle={setIsRecycle}
+                isOther={isOther}
+                setIsOther={setIsOther}
+                size={size}
+                setSize={setSize}
+                width={width}
+                setWidth={setWidth}
+                handleUpdate={handleUpdateTrashArea}
+            />
         </Dialog>
     )
 }

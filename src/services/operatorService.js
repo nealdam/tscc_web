@@ -1,4 +1,4 @@
-import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH, URL_GET_COLLECT_JOB_BY_DATE, URL_GET_GENERATE_STATUS, URL_GENERATE_TRASH_AREAS, URL_CANCEL_TRASH_AREA } from '../constants/serverUrl';
+import { URL_GET_DRIVERS, URL_GET_IMAGE, URL_GET_TRASH_AREAS, URL_POST_ASSIGN_TRASH, URL_GET_COLLECT_JOB_BY_DATE, URL_GET_GENERATE_STATUS, URL_GENERATE_TRASH_AREAS, URL_CANCEL_TRASH_AREA, URL_UPDATE_TRASH_AREA } from '../constants/serverUrl';
 
 const axios = require('axios').default;
 
@@ -92,4 +92,11 @@ export function getCollectJobByDate(token, date) {
     let url = `${URL_GET_COLLECT_JOB_BY_DATE}/${byDate.toISOString()}`;
 
     return axios.get(url, getConfig(token));
+}
+
+export function updateTrashArea(token, id, size, width) {
+
+    let url = `${URL_UPDATE_TRASH_AREA}/${id}`;
+
+    return axios.put(url, { size, width }, getConfig(token));
 }
